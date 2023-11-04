@@ -6,6 +6,28 @@ import {
 } from "drizzle-orm/sqlite-core";
 import type { AdapterAccount } from "@auth/core/adapters";
 
+export const organizations = sqliteTable("organization", {
+  id: text("id").primaryKey(),
+  name: text("name"),
+  logo: text("logo"),
+});
+
+export const members = sqliteTable("member", {
+  id: text("id").primaryKey(),
+  firstName: text("firstName").notNull(),
+  lastName: text("lastName").notNull(),
+  phoneNumber: text("phoneNumber"),
+  address: text("address"),
+  organizationId: text("organizationId").references(() => organizations.id),
+  groupId: text("groupId").references(() => groups.id),
+});
+
+export const groups = sqliteTable("group", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  organizationId: text("organizationId").references(() => organizations.id),
+});
+
 export const users = sqliteTable("user", {
   id: text("id").notNull().primaryKey(),
   name: text("name"),
