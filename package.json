@@ -21,7 +21,7 @@
     "lint": "eslint \"src/**/*.ts*\"",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
-    "qwik-speak-extract": "qwik-speak-extract --supportedLangs=en-US,nl-BE,tr-TR --assetsPath=i18n",
+    "qwik-speak-generate": "qwik-speak-extract --supportedLangs=en-US,nl-BE,tr-TR --assetsPath=i18n",
     "generate": "drizzle-kit generate:sqlite",
     "push": "drizzle-kit push:sqlite",
     "studio": "drizzle-kit studio",

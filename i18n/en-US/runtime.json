@@ -1,9 +1,9 @@
 {
   "runtime": {
-    "home": {
+    "root": {
       "head": {
-        "title": "Qwik Speak",
-        "description": "Quick start"
+        "description": "Quick start",
+        "title": "Qwik Speak"
       }
     }
   }
