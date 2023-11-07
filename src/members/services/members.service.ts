@@ -36,7 +36,7 @@ const mockFetchMembers = () => {
   return new Promise<Member[]>((resolve) => {
     // Simulate an asynchronous response
     setTimeout(() => {
-      resolve(generateMockMembers(10));
+      resolve(generateMockMembers(20));
     }, 1000); // Simulate a delay, like a real network request
   });
 };

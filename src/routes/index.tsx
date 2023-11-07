@@ -2,7 +2,7 @@ import { type JSXChildren, component$ } from "@builder.io/qwik";
 import { Link, type DocumentHead } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import {
-  BaseButton,
+  AnimatedButton,
   MaterialSymbolsGroupsSharp,
   MaterialSymbolsPerson,
   Page,
@@ -35,18 +35,16 @@ export const Apps = component$(() => {
       <div class="grid grid-cols-2 gap-4">
         {apps.map((app) => (
           <Link key={app.name} href={app.href}>
-            <BaseButton
-              onCustomTouchStart$={(_, element) => {
-                element.classList.toggle("shadow-none");
-              }}
-              onCustomTouchEnd$={(_, element) => {
-                element.classList.toggle("shadow-none");
+            <AnimatedButton
+              animation={{
+                scale: true,
+                shadow: true,
               }}
               class="shadow-dark flex flex-col items-center rounded-lg p-4"
             >
               {app.icon}
               {app.name}
-            </BaseButton>
+            </AnimatedButton>
           </Link>
         ))}
       </div>

@@ -4,7 +4,7 @@ import { Speak, useTranslate } from "qwik-speak";
 import { type ClassNameValue, twMerge } from "tailwind-merge";
 import { type Member } from "~/db";
 import { getAllMembers } from "~/members";
-import { Page } from "~/shared";
+import { AnimatedButton, Page } from "~/shared";
 
 export const useMembers = routeLoader$(async () => {
   const members = await getAllMembers();
@@ -47,14 +47,11 @@ const ListItem = component$(
     const t = useTranslate();
     return (
       <>
-        <button
+        <AnimatedButton
           {...rest}
-          onTouchStart$={(_, el) =>
-            el.classList.toggle("bg-secondary-transparent-30")
-          }
-          onTouchEnd$={(_, el) =>
-            el.classList.toggle("bg-secondary-transparent-30")
-          }
+          animation={{
+            background: true,
+          }}
           class={twMerge(
             "flex flex-col gap-1 py-2 transition-colors",
             rest.class as ClassNameValue,
@@ -66,7 +63,7 @@ const ListItem = component$(
           <div class="text-xs opacity-75">
             {member.dateOfBirth ?? t("app.errors.notSpecified@@Not specified")}
           </div>
-        </button>
+        </AnimatedButton>
         {!isLastItem && <hr />}
       </>
     );
