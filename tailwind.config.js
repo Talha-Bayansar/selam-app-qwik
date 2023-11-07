@@ -7,7 +7,17 @@ module.exports = {
         primary: "#21823C",
         // "primary-transparent": "rgba(33, 130, 60, 0.7)",
         secondary: "#9DC8A8",
-        // "secondary-transparent": "rgba(157, 200, 168, 0.2)",
+        "secondary-transparent": {
+          10: "rgba(157, 200, 168, 0.1)",
+          20: "rgba(157, 200, 168, 0.2)",
+          30: "rgba(157, 200, 168, 0.3)",
+          40: "rgba(157, 200, 168, 0.4)",
+          50: "rgba(157, 200, 168, 0.5)",
+          60: "rgba(157, 200, 168, 0.6)",
+          70: "rgba(157, 200, 168, 0.7)",
+          80: "rgba(157, 200, 168, 0.8)",
+          90: "rgba(157, 200, 168, 0.9)",
+        },
       },
       boxShadow: {
         light: "0px 4px 16px 0px rgba(33,130,60,0.1)",

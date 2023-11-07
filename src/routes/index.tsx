@@ -1,7 +1,12 @@
 import { type JSXChildren, component$ } from "@builder.io/qwik";
 import { Link, type DocumentHead } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
-import { MaterialSymbolsGroupsSharp, MaterialSymbolsPerson } from "~/shared";
+import {
+  BaseButton,
+  MaterialSymbolsGroupsSharp,
+  MaterialSymbolsPerson,
+  Page,
+} from "~/shared";
 import { primaryColor, routes } from "~/utils";
 
 interface App {
@@ -26,29 +31,26 @@ export const Apps = component$(() => {
   ];
 
   return (
-    <section class="text-primary flex flex-col gap-8">
-      <h1 class="text-4xl">{t("root.title@@Apps")}</h1>
+    <Page title={t("root.title@@Apps")}>
       <div class="grid grid-cols-2 gap-4">
         {apps.map((app) => (
-          <Link
-            key={app.name}
-            href={app.href}
-            onTouchStart$={(event, element) => {
-              element.classList.toggle("scale-95");
-              element.classList.toggle("shadow-none");
-            }}
-            onTouchEnd$={(event, element) => {
-              element.classList.toggle("scale-95");
-              element.classList.toggle("shadow-none");
-            }}
-            class="shadow-dark flex flex-col items-center rounded-lg p-4 transition-all"
-          >
-            {app.icon}
-            {app.name}
+          <Link key={app.name} href={app.href}>
+            <BaseButton
+              onCustomTouchStart$={(_, element) => {
+                element.classList.toggle("shadow-none");
+              }}
+              onCustomTouchEnd$={(_, element) => {
+                element.classList.toggle("shadow-none");
+              }}
+              class="shadow-dark flex flex-col items-center rounded-lg p-4"
+            >
+              {app.icon}
+              {app.name}
+            </BaseButton>
           </Link>
         ))}
       </div>
-    </section>
+    </Page>
   );
 });
 

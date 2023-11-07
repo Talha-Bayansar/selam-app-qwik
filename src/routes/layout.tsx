@@ -21,8 +21,8 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 
 export default component$(() => {
   return (
-    <div class="flex flex-col">
-      <main class="p-8">
+    <div class="flex min-h-screen w-screen flex-col">
+      <main class="flex-grow p-8">
         <Slot />
       </main>
     </div>

@@ -55,6 +55,7 @@
   },
   "dependencies": {
     "@libsql/client": "^0.3.6",
-    "drizzle-orm": "^0.28.6"
+    "drizzle-orm": "^0.28.6",
+    "tailwind-merge": "^2.0.0"
   }
 }
