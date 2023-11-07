@@ -2,6 +2,11 @@ import { component$, type JSXChildren, Slot } from "@builder.io/qwik";
 // import { routeLoader$ } from "@builder.io/qwik-city";
 import { Link, type RequestHandler } from "@builder.io/qwik-city";
 import { useTranslate } from "qwik-speak";
+import {
+  AnimatedButton,
+  MaterialSymbolsGridViewRounded,
+  MaterialSymbolsSettingsRounded,
+} from "~/shared";
 import { routes } from "~/utils";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
@@ -33,12 +38,12 @@ export default component$(() => {
     {
       name: t("app.apps@@Apps"),
       href: routes.root,
-      icon: <div>Apps</div>,
+      icon: <MaterialSymbolsGridViewRounded size={28} />,
     },
     {
       name: t("app.settings@@Settings"),
       href: routes.root,
-      icon: <div>Settings</div>,
+      icon: <MaterialSymbolsSettingsRounded size={28} />,
     },
   ];
   return (
@@ -46,7 +51,7 @@ export default component$(() => {
       <main class="flex-grow p-8">
         <Slot />
       </main>
-      <footer class="sticky bottom-0 left-0 right-0 bg-white pb-4">
+      <footer class="sticky bottom-0 left-0 right-0 bg-gradient-to-t from-white from-80% to-transparent py-4">
         <nav class="flex w-full justify-evenly">
           {navItems.map((item) => (
             <Link
@@ -54,7 +59,12 @@ export default component$(() => {
               href={item.href}
               class="grid flex-grow place-items-center py-4"
             >
-              {item.name}
+              <AnimatedButton
+                animation={{ scale: true }}
+                class="grid place-items-center"
+              >
+                {item.icon}
+              </AnimatedButton>
             </Link>
           ))}
         </nav>

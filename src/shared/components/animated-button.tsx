@@ -31,20 +31,39 @@ type Props = {
 export const AnimatedButton = component$((props: Props) => {
   const { onCustomTouchStart$, onCustomTouchEnd$, animation } = props;
 
-  const handleTouch$ = $(
+  const handleTouchStart$ = $(
     (event: QwikTouchEvent<HTMLButtonElement>, element: HTMLButtonElement) => {
       if (animation) {
         const { scale, background, shadow } = animation;
         if (scale) {
-          element.classList.toggle("standalone:scale-95");
+          element.classList.add("standalone:scale-95");
           // element.classList.toggle("scale-95");
         }
         if (background) {
-          element.classList.toggle("standalone:bg-secondary-transparent-30");
+          element.classList.add("standalone:bg-secondary-transparent-30");
           // element.classList.toggle("bg-secondary-transparent-30");
         }
         if (shadow) {
-          element.classList.toggle("standalone:shadow-none");
+          element.classList.add("standalone:shadow-none");
+          // element.classList.toggle("shadow-none");
+        }
+      }
+    },
+  );
+  const handleTouchEnd$ = $(
+    (event: QwikTouchEvent<HTMLButtonElement>, element: HTMLButtonElement) => {
+      if (animation) {
+        const { scale, background, shadow } = animation;
+        if (scale) {
+          element.classList.remove("standalone:scale-95");
+          // element.classList.toggle("scale-95");
+        }
+        if (background) {
+          element.classList.remove("standalone:bg-secondary-transparent-30");
+          // element.classList.toggle("bg-secondary-transparent-30");
+        }
+        if (shadow) {
+          element.classList.remove("standalone:shadow-none");
           // element.classList.toggle("shadow-none");
         }
       }
@@ -54,11 +73,15 @@ export const AnimatedButton = component$((props: Props) => {
     <button
       {...props}
       onTouchStart$={(event, element) => {
-        handleTouch$(event, element);
+        handleTouchStart$(event, element);
         if (onCustomTouchStart$) onCustomTouchStart$(event, element);
       }}
       onTouchEnd$={(event, element) => {
-        handleTouch$(event, element);
+        handleTouchEnd$(event, element);
+        if (onCustomTouchEnd$) onCustomTouchEnd$(event, element);
+      }}
+      onTouchCancel$={(event, element) => {
+        handleTouchEnd$(event, element);
         if (onCustomTouchEnd$) onCustomTouchEnd$(event, element);
       }}
       class={twMerge("w-full transition-all", props.class as ClassNameValue)}
