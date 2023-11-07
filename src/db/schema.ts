@@ -7,23 +7,25 @@ import {
 import type { AdapterAccount } from "@auth/core/adapters";
 
 export const organizations = sqliteTable("organization", {
-  id: text("id").primaryKey(),
+  id: integer("id").primaryKey(),
   name: text("name"),
   logo: text("logo"),
 });
 
 export const members = sqliteTable("member", {
-  id: text("id").primaryKey(),
+  id: integer("id").primaryKey(),
   firstName: text("firstName").notNull(),
   lastName: text("lastName").notNull(),
+  dateOfBirth: text("dateOfBirth"),
   phoneNumber: text("phoneNumber"),
   address: text("address"),
+  gender: text("gender", { enum: ["male", "female"] }),
   organizationId: text("organizationId").references(() => organizations.id),
   groupId: text("groupId").references(() => groups.id),
 });
 
 export const groups = sqliteTable("group", {
-  id: text("id").primaryKey(),
+  id: integer("id").primaryKey(),
   name: text("name").notNull(),
   organizationId: text("organizationId").references(() => organizations.id),
 });
