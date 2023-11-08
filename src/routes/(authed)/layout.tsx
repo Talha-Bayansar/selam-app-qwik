@@ -1,3 +1,4 @@
+import { type Session } from "@auth/core/types";
 import { component$, type JSXChildren, Slot } from "@builder.io/qwik";
 // import { routeLoader$ } from "@builder.io/qwik-city";
 import { Link, type RequestHandler } from "@builder.io/qwik-city";
@@ -8,6 +9,16 @@ import {
   MaterialSymbolsSettingsRounded,
 } from "~/shared";
 import { routes } from "~/utils";
+
+export const onRequest: RequestHandler = (event) => {
+  const session: Session | null = event.sharedMap.get("session");
+  if (!session || new Date(session.expires) < new Date()) {
+    throw event.redirect(
+      302,
+      `${routes.signIn}?callbackUrl=${event.url.pathname}`,
+    );
+  }
+};
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -42,7 +53,7 @@ export default component$(() => {
     },
     {
       name: t("app.settings@@Settings"),
-      href: routes.root,
+      href: routes.settings,
       icon: <MaterialSymbolsSettingsRounded size={28} />,
     },
   ];
