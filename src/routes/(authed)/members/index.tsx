@@ -1,10 +1,11 @@
 import { type QwikIntrinsicElements, component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import { type ClassNameValue, twMerge } from "tailwind-merge";
 import { type Member } from "~/db";
 import { getAllMembers } from "~/members";
-import { AnimatedButton, Page } from "~/shared";
+import { AnimatedButton, MaterialSymbolsAdd, Page } from "~/shared";
+import { routes } from "~/utils";
 
 export const useMembers = routeLoader$(async () => {
   const members = await getAllMembers();
@@ -15,7 +16,7 @@ const Members = component$(() => {
   const t = useTranslate();
   const members = useMembers();
   return (
-    <Page title={t("members.title@@Members")}>
+    <Page class="relative pb-8" title={t("members.title@@Members")}>
       <div class="flex flex-col">
         {members.value.map((member, i) => (
           <ListItem
@@ -25,6 +26,14 @@ const Members = component$(() => {
           />
         ))}
       </div>
+      <Link href={`${routes.members}/create`} class="fixed bottom-24 right-8">
+        <AnimatedButton
+          class="bg-primary shadow-dark rounded-full p-4 text-white"
+          animation={{ scale: true, shadow: true }}
+        >
+          <MaterialSymbolsAdd size={24} />
+        </AnimatedButton>
+      </Link>
     </Page>
   );
 });

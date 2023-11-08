@@ -76,3 +76,21 @@ export function MaterialSymbolsSettingsRounded(props: IconProps, key: string) {
     </svg>
   );
 }
+
+export function MaterialSymbolsAdd(props: IconProps, key: string) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={props.size ?? 16}
+      height={props.size ?? 16}
+      viewBox="0 0 24 24"
+      {...props}
+      key={key}
+    >
+      <path
+        fill={props.color ?? "currentColor"}
+        d="M11 13H5v-2h6V5h2v6h6v2h-6v6h-2v-6Z"
+      ></path>
+    </svg>
+  );
+}

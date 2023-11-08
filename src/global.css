@@ -8,7 +8,7 @@
 
 @layer base {
   @media all and (display-mode: standalone) {
-    button {
+    html {
       -webkit-tap-highlight-color: transparent;
     }
   }
