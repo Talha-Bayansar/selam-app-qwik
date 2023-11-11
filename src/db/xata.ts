@@ -14,6 +14,7 @@ const tables = [
       { name: "emailVerified", type: "datetime" },
       { name: "name", type: "string" },
       { name: "image", type: "string" },
+      { name: "organisation", type: "link", link: { table: "organisations" } },
     ],
     revLinks: [
       { column: "user", table: "nextauth_accounts" },
@@ -84,8 +85,7 @@ const tables = [
     revLinks: [
       { column: "organization", table: "members" },
       { column: "organization", table: "groups" },
-      { column: "organisation", table: "organisations_members" },
-      { column: "organisation", table: "organisations_groups" },
+      { column: "organisation", table: "nextauth_users" },
     ],
   },
   {
@@ -109,10 +109,7 @@ const tables = [
       { name: "gender", type: "link", link: { table: "genders" } },
       { name: "organization", type: "link", link: { table: "organisations" } },
     ],
-    revLinks: [
-      { column: "member", table: "members_groups" },
-      { column: "member", table: "organisations_members" },
-    ],
+    revLinks: [{ column: "member", table: "members_groups" }],
   },
   {
     name: "groups",
@@ -120,10 +117,7 @@ const tables = [
       { name: "name", type: "string", unique: true },
       { name: "organization", type: "link", link: { table: "organisations" } },
     ],
-    revLinks: [
-      { column: "group", table: "members_groups" },
-      { column: "group", table: "organisations_groups" },
-    ],
+    revLinks: [{ column: "group", table: "members_groups" }],
   },
   {
     name: "genders",
@@ -134,20 +128,6 @@ const tables = [
     name: "members_groups",
     columns: [
       { name: "member", type: "link", link: { table: "members" } },
-      { name: "group", type: "link", link: { table: "groups" } },
-    ],
-  },
-  {
-    name: "organisations_members",
-    columns: [
-      { name: "member", type: "link", link: { table: "members" } },
-      { name: "organisation", type: "link", link: { table: "organisations" } },
-    ],
-  },
-  {
-    name: "organisations_groups",
-    columns: [
-      { name: "organisation", type: "link", link: { table: "organisations" } },
       { name: "group", type: "link", link: { table: "groups" } },
     ],
   },
@@ -191,12 +171,6 @@ export type GendersRecord = Genders & XataRecord;
 export type MembersGroups = InferredTypes["members_groups"];
 export type MembersGroupsRecord = MembersGroups & XataRecord;
 
-export type OrganisationsMembers = InferredTypes["organisations_members"];
-export type OrganisationsMembersRecord = OrganisationsMembers & XataRecord;
-
-export type OrganisationsGroups = InferredTypes["organisations_groups"];
-export type OrganisationsGroupsRecord = OrganisationsGroups & XataRecord;
-
 export type DatabaseSchema = {
   nextauth_users: NextauthUsersRecord;
   nextauth_accounts: NextauthAccountsRecord;
@@ -209,8 +183,6 @@ export type DatabaseSchema = {
   groups: GroupsRecord;
   genders: GendersRecord;
   members_groups: MembersGroupsRecord;
-  organisations_members: OrganisationsMembersRecord;
-  organisations_groups: OrganisationsGroupsRecord;
 };
 
 const DatabaseClient = buildClient();

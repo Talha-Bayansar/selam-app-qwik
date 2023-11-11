@@ -1,0 +1,13 @@
+{
+  "members": {
+    "address": "Address",
+    "dateOfBirth": "Date of birth",
+    "errors": {
+      "createFailed": "Could not create new member."
+    },
+    "firstName": "First name",
+    "lastName": "Last name",
+    "newMember": "Yeni Üye",
+    "title": "Members"
+  }
+}

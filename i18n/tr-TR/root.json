@@ -1,6 +1,11 @@
 {
   "root": {
+    "apps": {
+      "groups": "Groups",
+      "members": "Members"
+    },
     "dates": "Dates",
-    "numbers": "Numbers"
+    "numbers": "Numbers",
+    "title": "Apps"
   }
 }

@@ -4,17 +4,17 @@ const locales = {
   en: {
     lang: "en-US",
     currency: "USD",
-    // timeZone: "America/Los_Angeles",
+    timeZone: "America/Los_Angeles",
   },
   tr: {
     lang: "tr-TR",
     currency: "TRY",
-    // timeZone: "Europe/Istanbul"
+    timeZone: "Europe/Istanbul",
   },
   nl: {
     lang: "nl-BE",
     currency: "EUR",
-    // timeZone: "Europe/Brussels"
+    timeZone: "Europe/Brussels",
   },
 };
 

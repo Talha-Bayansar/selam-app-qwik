@@ -1,6 +1,13 @@
 {
   "app": {
+    "apps": "Apps",
     "changeLocale": "Change locale",
+    "create": "Create",
+    "creating": "Creating",
+    "errors": {
+      "notSpecified": "Not specified"
+    },
+    "settings": "Settings",
     "title": "{{name}} demo"
   }
 }

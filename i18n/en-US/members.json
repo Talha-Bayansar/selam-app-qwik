@@ -1,0 +1,10 @@
+{
+  "members": {
+    "address": "Address",
+    "dateOfBirth": "Date of birth",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "newMember": "New member",
+    "title": "Members"
+  }
+}

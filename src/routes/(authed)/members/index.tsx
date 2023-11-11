@@ -1,15 +1,26 @@
 import { type QwikIntrinsicElements, component$ } from "@builder.io/qwik";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
-import { Speak, useTranslate } from "qwik-speak";
+import { Speak, useFormatDate, useTranslate } from "qwik-speak";
 import { type ClassNameValue, twMerge } from "tailwind-merge";
-import { type Member } from "~/db";
-import { getAllMembers } from "~/members";
+import { type MembersRecord, xata } from "~/db";
+import { getServerSession } from "~/routes/plugin@auth";
 import { AnimatedButton, MaterialSymbolsAdd, Page } from "~/shared";
 import { routes } from "~/utils";
 
-export const useMembers = routeLoader$(async () => {
-  const members = await getAllMembers();
-  return members;
+export const useMembers = routeLoader$(async (event) => {
+  const session = getServerSession(event);
+
+  const response = await xata.db.members
+    .filter({
+      "organization.id": session?.user?.organisation?.id,
+    })
+    .getPaginated({
+      pagination: {
+        size: 20,
+      },
+    });
+
+  return response.records as MembersRecord[];
 });
 
 const Members = component$(() => {
@@ -48,12 +59,13 @@ export default component$(() => {
 
 type ListItemProps = {
   isLastItem: boolean;
-  member: Member;
+  member: MembersRecord;
 } & QwikIntrinsicElements["button"];
 
 const ListItem = component$(
   ({ isLastItem, member, ...rest }: ListItemProps) => {
     const t = useTranslate();
+    const d = useFormatDate();
     return (
       <>
         <AnimatedButton
@@ -70,7 +82,11 @@ const ListItem = component$(
             {member.firstName} {member.lastName}
           </div>
           <div class="text-xs opacity-75">
-            {member.dateOfBirth ?? t("app.errors.notSpecified@@Not specified")}
+            {member.dateOfBirth
+              ? d(member.dateOfBirth, {
+                  dateStyle: "long",
+                })
+              : t("app.errors.notSpecified@@Not specified")}
           </div>
         </AnimatedButton>
         {!isLastItem && <hr />}

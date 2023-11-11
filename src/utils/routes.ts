@@ -4,5 +4,5 @@ export const routes = {
   signIn: "/api/auth/signin",
   members: "/members",
   groups: "/groups",
-  organizations: "/organizations",
+  organisations: "/organisations",
 };
