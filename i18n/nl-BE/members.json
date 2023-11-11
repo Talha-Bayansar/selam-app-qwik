@@ -3,6 +3,7 @@
     "address": "Address",
     "dateOfBirth": "Date of birth",
     "firstName": "First name",
+    "gender": "Gender",
     "lastName": "Last name",
     "newMember": "New member",
     "title": "Members"

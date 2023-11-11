@@ -6,6 +6,7 @@
       "createFailed": "Could not create new member."
     },
     "firstName": "First name",
+    "gender": "Gender",
     "lastName": "Last name",
     "newMember": "Yeni Üye",
     "title": "Members"

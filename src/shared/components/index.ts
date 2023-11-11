@@ -4,3 +4,4 @@ export * from "./dropdown-menu";
 export * from "./animated-button";
 export * from "./page";
 export * from "./input-field";
+export * from "./select-field";

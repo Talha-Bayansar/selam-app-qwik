@@ -8,6 +8,10 @@ import {
 } from "@builder.io/qwik";
 import { type ClassNameValue, twMerge } from "tailwind-merge";
 
+type AnimationProps = {
+  class: string;
+};
+
 type Props = {
   onCustomTouchStart$?: QRL<
     (
@@ -22,9 +26,9 @@ type Props = {
     ) => any
   >;
   animation?: {
-    scale?: boolean;
-    background?: boolean;
-    shadow?: boolean;
+    scale?: boolean | AnimationProps;
+    background?: boolean | AnimationProps;
+    shadow?: boolean | AnimationProps;
   };
 } & QwikIntrinsicElements["button"];
 
@@ -32,20 +36,21 @@ export const AnimatedButton = component$((props: Props) => {
   const { onCustomTouchStart$, onCustomTouchEnd$, animation } = props;
 
   const handleTouchStart$ = $(
-    (event: QwikTouchEvent<HTMLButtonElement>, element: HTMLButtonElement) => {
+    (_: QwikTouchEvent<HTMLButtonElement>, element: HTMLButtonElement) => {
       if (animation) {
         const { scale, background, shadow } = animation;
         if (scale) {
-          element.classList.add("standalone:scale-95");
-          // element.classList.toggle("scale-95");
+          element.classList.add(scale === true ? "scale-95" : scale.class);
         }
         if (background) {
-          element.classList.add("standalone:bg-secondary-transparent-30");
-          // element.classList.toggle("bg-secondary-transparent-30");
+          element.classList.add(
+            background === true
+              ? "bg-secondary-transparent-30"
+              : background.class,
+          );
         }
         if (shadow) {
-          element.classList.add("standalone:shadow-none");
-          // element.classList.toggle("shadow-none");
+          element.classList.add(shadow === true ? "shadow-none" : shadow.class);
         }
       }
     },
@@ -55,16 +60,19 @@ export const AnimatedButton = component$((props: Props) => {
       if (animation) {
         const { scale, background, shadow } = animation;
         if (scale) {
-          element.classList.remove("standalone:scale-95");
-          // element.classList.toggle("scale-95");
+          element.classList.remove(scale === true ? "scale-95" : scale.class);
         }
         if (background) {
-          element.classList.remove("standalone:bg-secondary-transparent-30");
-          // element.classList.toggle("bg-secondary-transparent-30");
+          element.classList.remove(
+            background === true
+              ? "bg-secondary-transparent-30"
+              : background.class,
+          );
         }
         if (shadow) {
-          element.classList.remove("standalone:shadow-none");
-          // element.classList.toggle("shadow-none");
+          element.classList.remove(
+            shadow === true ? "shadow-none" : shadow.class,
+          );
         }
       }
     },

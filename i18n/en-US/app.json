@@ -5,8 +5,10 @@
     "create": "Create",
     "creating": "Creating",
     "errors": {
-      "notSpecified": "Not specified"
+      "notSpecified": "Not specified",
+      "requiredField": "This field is required"
     },
+    "notSelected": "Not selected",
     "settings": "Settings",
     "title": "{{name}} demo"
   }

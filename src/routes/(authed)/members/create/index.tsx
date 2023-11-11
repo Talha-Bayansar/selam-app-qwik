@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { type HTMLInputTypeAttribute, component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   type InitialValues,
@@ -9,9 +9,17 @@ import {
 import { Speak, useTranslate } from "qwik-speak";
 import { type GendersRecord, xata } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
-import { AnimatedButton, InputField, Page } from "~/shared";
+import { AnimatedButton, InputField, Page, SelectField } from "~/shared";
 import { routes } from "~/utils";
 import { type Input, minLength, object, string, nullable } from "valibot";
+
+type TInputField = {
+  name: "firstName" | "lastName" | "dateOfBirth" | "address" | "gender";
+  placeholder?: string;
+  label: string;
+  required?: boolean;
+  type?: HTMLInputTypeAttribute;
+};
 
 const FormSchema = object({
   firstName: string([minLength(1, "requiredField")]),
@@ -26,8 +34,8 @@ type LoginForm = Input<typeof FormSchema>;
 export const useFormLoader = routeLoader$<InitialValues<LoginForm>>(() => ({
   firstName: "",
   lastName: "",
-  dateOfBirth: null,
-  address: null,
+  dateOfBirth: "",
+  address: "",
   gender: "",
 }));
 
@@ -38,24 +46,25 @@ export const useGenders = routeLoader$(async () => {
 
 export const useAddMember = formAction$<LoginForm>(async (data, event) => {
   const session = getServerSession(event);
+
   try {
     await xata.db.members.create({
       firstName: data.firstName,
       lastName: data.lastName,
       dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
-      address: (data.address as string) || null,
-      gender: null,
+      address: data.address || null,
+      gender: data.gender || null,
       organization: session?.user?.organisation?.id,
     });
     event.redirect(302, routes.members);
-  } catch (error) {
-    return event.fail(401, {
-      message: "createFailed",
+  } catch (error: any) {
+    return event.fail(error.errors[0].status, {
+      message: error.errors[0].message,
     });
   }
 }, valiForm$(FormSchema));
 
-const Members = component$(() => {
+const CreateMember = component$(() => {
   const t = useTranslate();
   const genders = useGenders();
   const [loginForm, { Form, Field }] = useForm<LoginForm>({
@@ -64,83 +73,67 @@ const Members = component$(() => {
     validate: valiForm$(FormSchema),
   });
 
-  // const formFields = [
-  //   {
-  //     name: "firstName",
-  //     placeholder: "John",
-  //     label: t("members.firstName@@First name"),
-  //     required: true,
-  //   },
-  //   {
-  //     name: "lastName",
-  //     placeholder: "Doe",
-  //     label: t("members.lastName@@Last name"),
-  //     required: true,
-  //   },
-  //   {
-  //     name: "dateOfBirth",
-  //     type: "date",
-  //     label: t("members.dateOfBirth@@Date of birth"),
-  //   },
-  // ];
+  const inputFields: TInputField[] = [
+    {
+      name: "firstName",
+      placeholder: "John",
+      label: t("members.firstName@@First name"),
+      required: true,
+    },
+    {
+      name: "lastName",
+      placeholder: "Doe",
+      label: t("members.lastName@@Last name"),
+      required: true,
+    },
+    {
+      name: "dateOfBirth",
+      type: "date",
+      label: t("members.dateOfBirth@@Date of birth"),
+    },
+    {
+      name: "address",
+      label: t("members.address@@Address"),
+    },
+  ];
 
   return (
     <Page class="flex-grow" title={t("members.newMember@@New member")}>
       <Form class="flex flex-grow flex-col justify-between">
         <div class="flex flex-col gap-4">
-          <Field name="firstName">
-            {(field, props) => (
-              <InputField
-                {...props}
-                required
-                label={t("members.firstName@@First name")}
-                value={field.value}
-                error={field.error}
-              />
-            )}
-          </Field>
-          <Field name="lastName">
-            {(field, props) => (
-              <InputField
-                {...props}
-                required
-                label={t("members.lastName@@Last name")}
-                value={field.value}
-                error={field.error}
-              />
-            )}
-          </Field>
-          <Field name="dateOfBirth">
-            {(field, props) => (
-              <InputField
-                {...props}
-                label={t("members.dateOfBirth@@Date of birth")}
-                type="date"
-                value={field.value}
-                error={field.error}
-              />
-            )}
-          </Field>
-          <Field name="address">
-            {(field, props) => (
-              <InputField
-                {...props}
-                label={t("members.address@@Address")}
-                value={field.value}
-                error={field.error}
-              />
-            )}
-          </Field>
+          {inputFields.map((inputField) => (
+            <Field key={inputField.name} name={inputField.name}>
+              {(field, props) => (
+                <InputField
+                  {...props}
+                  required={inputField.required}
+                  placeholder={inputField.placeholder}
+                  type={inputField.type}
+                  label={inputField.label}
+                  value={field.value}
+                  error={
+                    field.error &&
+                    t(`app.errors.${field.error}@@${field.error}`)
+                  }
+                />
+              )}
+            </Field>
+          ))}
           <Field name="gender">
             {(field, props) => (
-              <select {...props} value={field.value}>
+              <SelectField
+                label={t("members.gender@@Gender")}
+                {...props}
+                value={field.value}
+                error={field.error}
+              >
                 <option value="">{t("app.notSelected@@Not selected")}</option>
                 {genders.value.map((gender) => (
                   <option key={gender.name} value={gender.id}>
                     {gender.name as string}
                   </option>
                 ))}
-              </select>
+              </SelectField>
             )}
           </Field>
         </div>
@@ -162,7 +155,7 @@ const Members = component$(() => {
 export default component$(() => {
   return (
     <Speak assets={["members"]}>
-      <Members />
+      <CreateMember />
     </Speak>
   );
 });
