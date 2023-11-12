@@ -5,7 +5,17 @@ module.exports = {
     extend: {
       colors: {
         primary: "#21823C",
-        // "primary-transparent": "rgba(33, 130, 60, 0.7)",
+        "primary-transparent": {
+          10: "rgba(33, 130, 60, 0.1)",
+          20: "rgba(33, 130, 60, 0.2)",
+          30: "rgba(33, 130, 60, 0.3)",
+          40: "rgba(33, 130, 60, 0.4)",
+          50: "rgba(33, 130, 60, 0.5)",
+          60: "rgba(33, 130, 60, 0.6)",
+          70: "rgba(33, 130, 60, 0.7)",
+          80: "rgba(33, 130, 60, 0.8)",
+          90: "rgba(33, 130, 60, 0.9)",
+        },
         secondary: "#9DC8A8",
         "secondary-transparent": {
           10: "rgba(157, 200, 168, 0.1)",
