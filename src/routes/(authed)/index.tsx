@@ -20,19 +20,19 @@ export const Apps = component$(() => {
   const apps: App[] = [
     {
       name: t("root.apps.members@@Members"),
-      icon: <MaterialSymbolsPerson size={32} color={primaryColor} />,
+      icon: <MaterialSymbolsPerson size={36} color={primaryColor} />,
       href: routes.members,
     },
     {
       name: t("root.apps.groups@@Groups"),
-      icon: <MaterialSymbolsGroupsSharp size={32} color={primaryColor} />,
+      icon: <MaterialSymbolsGroupsSharp size={36} color={primaryColor} />,
       href: routes.groups,
     },
   ];
 
   return (
     <Page title={t("root.title@@Apps")}>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
         {apps.map((app) => (
           <Link key={app.name} href={app.href}>
             <AnimatedButton
@@ -40,7 +40,7 @@ export const Apps = component$(() => {
                 scale: true,
                 shadow: true,
               }}
-              class="shadow-dark flex flex-col items-center rounded-lg p-4"
+              class="shadow-dark flex flex-col items-center justify-center rounded-lg p-4"
             >
               {app.icon}
               {app.name}

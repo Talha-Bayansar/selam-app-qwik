@@ -98,8 +98,11 @@ const CreateMember = component$(() => {
   ];
 
   return (
-    <Page class="flex-grow" title={t("members.newMember@@New member")}>
-      <Form class="flex flex-grow flex-col justify-between">
+    <Page
+      class="flex-grow md:items-center"
+      title={t("members.newMember@@New member")}
+    >
+      <Form class="flex flex-grow flex-col justify-between md:w-full md:max-w-lg md:justify-start md:gap-8">
         <div class="flex flex-col gap-4">
           {inputFields.map((inputField) => (
             <Field key={inputField.name} name={inputField.name}>
