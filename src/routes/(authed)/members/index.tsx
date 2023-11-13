@@ -30,11 +30,12 @@ const Members = component$(() => {
     <Page class="relative pb-8" title={t("members.title@@Members")}>
       <div class="flex flex-col">
         {members.value.map((member, i) => (
-          <ListItem
-            key={member.id}
-            member={member}
-            isLastItem={members.value.length <= i + 1}
-          />
+          <Link key={member.id} href={`${routes.members}/${member.id}`}>
+            <ListItem
+              member={member}
+              isLastItem={members.value.length <= i + 1}
+            />
+          </Link>
         ))}
       </div>
       <Link
