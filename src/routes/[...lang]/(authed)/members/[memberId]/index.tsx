@@ -5,7 +5,7 @@ import { type MembersRecord, xata } from "~/db";
 import { Page } from "~/shared";
 
 export const useMember = routeLoader$(async (requestEvent) => {
-  const id = requestEvent.params.id;
+  const id = requestEvent.params.memberId;
   const result = await xata.db.members
     .filter({
       id: id,

@@ -1,42 +1,54 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
 import {
   type InitialValues,
   formAction$,
-  valiForm$,
   useForm,
+  valiForm$,
 } from "@modular-forms/qwik";
 import { Speak, useTranslate } from "qwik-speak";
-import { type GendersRecord, xata } from "~/db";
-import { FormSchema, type TInputField, type MembersForm } from "~/members";
-import { getServerSession } from "~/routes/plugin@auth";
+import { type MembersForm, FormSchema, type TInputField } from "~/members";
 import { AnimatedButton, InputField, Page, SelectField } from "~/shared";
+import { routeLoader$ } from "@builder.io/qwik-city";
+import { xata, type GendersRecord } from "~/db";
 import { routes } from "~/utils";
 
-export const useFormLoader = routeLoader$<InitialValues<MembersForm>>(() => ({
-  firstName: "",
-  lastName: "",
-  dateOfBirth: "",
-  address: "",
-  gender: "",
-}));
+export const useFormLoader = routeLoader$<InitialValues<MembersForm>>(
+  async (requestEvent) => {
+    const id = requestEvent.params.memberId;
+    const member = await xata.db.members
+      .filter({
+        id: id,
+      })
+      .getFirst();
+
+    if (!member) {
+      requestEvent.status(404);
+    }
+
+    return {
+      firstName: member?.firstName,
+      lastName: member?.lastName,
+      dateOfBirth: member?.dateOfBirth?.toISOString().split("T")[0],
+      address: member?.address,
+      gender: member?.gender?.id ?? "",
+    };
+  },
+);
 
 export const useGenders = routeLoader$(async () => {
   const response = await xata.db.genders.getAll();
   return response as GendersRecord[];
 });
 
-export const useAddMember = formAction$<MembersForm>(async (data, event) => {
-  const session = getServerSession(event);
-
+export const useEditMember = formAction$<MembersForm>(async (data, event) => {
   try {
-    await xata.db.members.create({
+    await xata.db.members.update({
+      id: event.params.memberId,
       firstName: data.firstName,
       lastName: data.lastName,
       dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
       address: data.address || null,
       gender: data.gender || null,
-      organization: session?.user?.organisation?.id,
     });
     event.redirect(302, routes.members);
   } catch (error: any) {
@@ -46,12 +58,12 @@ export const useAddMember = formAction$<MembersForm>(async (data, event) => {
   }
 }, valiForm$(FormSchema));
 
-const CreateMember = component$(() => {
+export const EditMember = component$(() => {
   const t = useTranslate();
   const genders = useGenders();
   const [membersForm, { Form, Field }] = useForm<MembersForm>({
     loader: useFormLoader(),
-    action: useAddMember(),
+    action: useEditMember(),
     validate: valiForm$(FormSchema),
   });
 
@@ -78,7 +90,6 @@ const CreateMember = component$(() => {
       label: t("members.address@@Address"),
     },
   ];
-
   return (
     <Page class="flex-grow" title={t("members.newMember@@New member")}>
       <Form class="flex flex-grow flex-col justify-between md:w-full md:max-w-lg md:justify-start md:gap-8">
@@ -126,8 +137,8 @@ const CreateMember = component$(() => {
           disabled={membersForm.submitting}
         >
           {membersForm.submitting
-            ? t("app.creating@@Creating")
-            : t("app.create@@Create")}
+            ? t("app.editing@@Editing")
+            : t("app.edit@@Edit")}
         </AnimatedButton>
       </Form>
     </Page>
@@ -137,7 +148,7 @@ const CreateMember = component$(() => {
 export default component$(() => {
   return (
     <Speak assets={["members"]}>
-      <CreateMember />
+      <EditMember />
     </Speak>
   );
 });
