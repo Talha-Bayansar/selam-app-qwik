@@ -13,8 +13,10 @@ export const InputField = component$(
         for={name}
         class={twMerge("flex flex-col gap-2", rest.class as ClassNameValue)}
       >
-        {label}
-        {required && "*"}
+        <span>
+          {label}
+          {required && "*"}
+        </span>
         <input
           {...rest}
           class="border-primary rounded-lg border p-2"

@@ -12,8 +12,10 @@ export const SelectField = component$(({ label, error, ...rest }: Props) => {
       class={twMerge("flex flex-col gap-2", rest.class as ClassNameValue)}
       for={rest.name}
     >
-      {label}
-      {rest.required && "*"}
+      <span>
+        {label}
+        {rest.required && "*"}
+      </span>
       <select {...rest} class="border-primary rounded-lg border p-2">
         <Slot />
       </select>

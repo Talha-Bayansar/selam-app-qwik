@@ -1,6 +1,6 @@
 import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
-import { Speak, useTranslate } from "qwik-speak";
+import { Speak, useFormatDate, useTranslate } from "qwik-speak";
 import { type MembersRecord, xata } from "~/db";
 import { Page } from "~/shared";
 
@@ -10,6 +10,7 @@ export const useMember = routeLoader$(async (requestEvent) => {
     .filter({
       id: id,
     })
+    .select(["*", "gender.name"])
     .getFirst();
 
   if (!result) {
@@ -21,6 +22,7 @@ export const useMember = routeLoader$(async (requestEvent) => {
 
 const MemberDetails = component$(() => {
   const t = useTranslate();
+  const d = useFormatDate();
   const member = useMember();
 
   if (!member.value) {
@@ -35,7 +37,18 @@ const MemberDetails = component$(() => {
 
   return (
     <Page title={`${member.value.firstName} ${member.value.lastName}`}>
-      {JSON.stringify(member.value)}
+      <p>
+        {t("members.address@@Address")}: {member.value.address ?? "/"}
+      </p>
+      <p>
+        {t("members.dateOfBirth@@Date of birth")}:{" "}
+        {member.value.dateOfBirth
+          ? d(member.value.dateOfBirth, { dateStyle: "long" })
+          : "/"}
+      </p>
+      <p>
+        {t("members.gender@@Gender")}: {member.value.gender?.name ?? "/"}
+      </p>
     </Page>
   );
 });

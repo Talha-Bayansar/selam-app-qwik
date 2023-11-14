@@ -29,9 +29,9 @@ const FormSchema = object({
   gender: string(),
 });
 
-type LoginForm = Input<typeof FormSchema>;
+type MembersForm = Input<typeof FormSchema>;
 
-export const useFormLoader = routeLoader$<InitialValues<LoginForm>>(() => ({
+export const useFormLoader = routeLoader$<InitialValues<MembersForm>>(() => ({
   firstName: "",
   lastName: "",
   dateOfBirth: "",
@@ -44,7 +44,7 @@ export const useGenders = routeLoader$(async () => {
   return response as GendersRecord[];
 });
 
-export const useAddMember = formAction$<LoginForm>(async (data, event) => {
+export const useAddMember = formAction$<MembersForm>(async (data, event) => {
   const session = getServerSession(event);
 
   try {
@@ -67,7 +67,7 @@ export const useAddMember = formAction$<LoginForm>(async (data, event) => {
 const CreateMember = component$(() => {
   const t = useTranslate();
   const genders = useGenders();
-  const [loginForm, { Form, Field }] = useForm<LoginForm>({
+  const [membersForm, { Form, Field }] = useForm<MembersForm>({
     loader: useFormLoader(),
     action: useAddMember(),
     validate: valiForm$(FormSchema),
@@ -98,10 +98,7 @@ const CreateMember = component$(() => {
   ];
 
   return (
-    <Page
-      class="flex-grow md:items-center"
-      title={t("members.newMember@@New member")}
-    >
+    <Page class="flex-grow" title={t("members.newMember@@New member")}>
       <Form class="flex flex-grow flex-col justify-between md:w-full md:max-w-lg md:justify-start md:gap-8">
         <div class="flex flex-col gap-4">
           {inputFields.map((inputField) => (
@@ -144,9 +141,9 @@ const CreateMember = component$(() => {
           animation={{ scale: true, shadow: true }}
           type="submit"
           class="bg-primary shadow-dark rounded-lg py-2 text-white"
-          disabled={loginForm.submitting}
+          disabled={membersForm.submitting}
         >
-          {loginForm.submitting
+          {membersForm.submitting
             ? t("app.creating@@Creating")
             : t("app.create@@Create")}
         </AnimatedButton>
