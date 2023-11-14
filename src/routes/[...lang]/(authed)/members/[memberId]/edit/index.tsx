@@ -4,15 +4,20 @@ import {
   formAction$,
   useForm,
   valiForm$,
+  FormError,
 } from "@modular-forms/qwik";
 import { Speak, useTranslate } from "qwik-speak";
-import { type MembersForm, FormSchema, type TInputField } from "~/members";
+import {
+  type TMembersForm,
+  MembersFormSchema,
+  type TInputField,
+} from "~/members";
 import { AnimatedButton, InputField, Page, SelectField } from "~/shared";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { xata, type GendersRecord } from "~/db";
 import { routes } from "~/utils";
 
-export const useFormLoader = routeLoader$<InitialValues<MembersForm>>(
+export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(
   async (requestEvent) => {
     const id = requestEvent.params.memberId;
     const member = await xata.db.members
@@ -22,15 +27,15 @@ export const useFormLoader = routeLoader$<InitialValues<MembersForm>>(
       .getFirst();
 
     if (!member) {
-      requestEvent.status(404);
+      throw new FormError<TMembersForm>("Member does not exist");
     }
 
     return {
-      firstName: member?.firstName,
-      lastName: member?.lastName,
-      dateOfBirth: member?.dateOfBirth?.toISOString().split("T")[0],
-      address: member?.address,
-      gender: member?.gender?.id ?? "",
+      firstName: member.firstName,
+      lastName: member.lastName,
+      dateOfBirth: member.dateOfBirth?.toISOString().split("T")[0],
+      address: member.address,
+      gender: member.gender?.id ?? "",
     };
   },
 );
@@ -40,7 +45,7 @@ export const useGenders = routeLoader$(async () => {
   return response as GendersRecord[];
 });
 
-export const useEditMember = formAction$<MembersForm>(async (data, event) => {
+export const useEditMember = formAction$<TMembersForm>(async (data, event) => {
   try {
     await xata.db.members.update({
       id: event.params.memberId,
@@ -56,15 +61,15 @@ export const useEditMember = formAction$<MembersForm>(async (data, event) => {
       message: error.errors[0].message,
     });
   }
-}, valiForm$(FormSchema));
+}, valiForm$(MembersFormSchema));
 
 export const EditMember = component$(() => {
   const t = useTranslate();
   const genders = useGenders();
-  const [membersForm, { Form, Field }] = useForm<MembersForm>({
+  const [membersForm, { Form, Field }] = useForm<TMembersForm>({
     loader: useFormLoader(),
     action: useEditMember(),
-    validate: valiForm$(FormSchema),
+    validate: valiForm$(MembersFormSchema),
   });
 
   const inputFields: TInputField[] = [

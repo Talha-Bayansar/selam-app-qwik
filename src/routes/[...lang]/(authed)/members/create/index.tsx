@@ -8,12 +8,16 @@ import {
 } from "@modular-forms/qwik";
 import { Speak, useTranslate } from "qwik-speak";
 import { type GendersRecord, xata } from "~/db";
-import { FormSchema, type TInputField, type MembersForm } from "~/members";
+import {
+  MembersFormSchema,
+  type TInputField,
+  type TMembersForm,
+} from "~/members";
 import { getServerSession } from "~/routes/plugin@auth";
 import { AnimatedButton, InputField, Page, SelectField } from "~/shared";
 import { routes } from "~/utils";
 
-export const useFormLoader = routeLoader$<InitialValues<MembersForm>>(() => ({
+export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(() => ({
   firstName: "",
   lastName: "",
   dateOfBirth: "",
@@ -26,7 +30,7 @@ export const useGenders = routeLoader$(async () => {
   return response as GendersRecord[];
 });
 
-export const useAddMember = formAction$<MembersForm>(async (data, event) => {
+export const useAddMember = formAction$<TMembersForm>(async (data, event) => {
   const session = getServerSession(event);
 
   try {
@@ -44,15 +48,15 @@ export const useAddMember = formAction$<MembersForm>(async (data, event) => {
       message: error.errors[0].message,
     });
   }
-}, valiForm$(FormSchema));
+}, valiForm$(MembersFormSchema));
 
 const CreateMember = component$(() => {
   const t = useTranslate();
   const genders = useGenders();
-  const [membersForm, { Form, Field }] = useForm<MembersForm>({
+  const [membersForm, { Form, Field }] = useForm<TMembersForm>({
     loader: useFormLoader(),
     action: useAddMember(),
-    validate: valiForm$(FormSchema),
+    validate: valiForm$(MembersFormSchema),
   });
 
   const inputFields: TInputField[] = [

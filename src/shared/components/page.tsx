@@ -7,7 +7,7 @@ type Props = {
 
 export const Page = component$((props: Props) => {
   return (
-    <div class={twMerge("flex flex-col gap-8")}>
+    <div class={twMerge("flex flex-grow flex-col gap-8")}>
       <h1 class="text-4xl">{props.title}</h1>
       <div
         {...props}

@@ -9,7 +9,7 @@ export type TInputField = {
   type?: HTMLInputTypeAttribute;
 };
 
-export const FormSchema = object({
+export const MembersFormSchema = object({
   firstName: string([minLength(1, "requiredField")]),
   lastName: string([minLength(1, "requiredField")]),
   dateOfBirth: nullable(string()),
@@ -17,4 +17,4 @@ export const FormSchema = object({
   gender: string(),
 });
 
-export type MembersForm = Input<typeof FormSchema>;
+export type TMembersForm = Input<typeof MembersFormSchema>;
