@@ -40,7 +40,7 @@ const Members = component$(() => {
       </div>
       <Link
         href={`${routes.members}/create`}
-        class="fixed bottom-24 right-8 md:bottom-16 md:right-16"
+        class="fixed bottom-28 right-8 md:bottom-16 md:right-16"
       >
         <AnimatedButton
           class="bg-primary shadow-dark rounded-full p-4 text-white"

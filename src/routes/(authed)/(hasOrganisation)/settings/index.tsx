@@ -1,5 +1,4 @@
 import { component$, $ } from "@builder.io/qwik";
-import { Form } from "@builder.io/qwik-city";
 import {
   Speak,
   useSpeakConfig,
@@ -24,6 +23,17 @@ const Settings = component$(() => {
     location.reload();
   });
 
+  const confirmText = t(
+    "app.signOutConfirmation@@Are you sure you want to sign out?",
+  );
+
+  const handleSignOut = $(() => {
+    const isConfirmed = confirm(confirmText);
+    if (isConfirmed) {
+      signOut.submit({ callbackUrl: routes.signIn });
+    }
+  });
+
   return (
     <Page class="relative pb-8" title={t("settings.title@@Settings")}>
       <div class="flex flex-col gap-8">
@@ -43,15 +53,16 @@ const Settings = component$(() => {
               </option>
             ))}
           </SelectField>
-          <Form action={signOut}>
-            <input type="hidden" name="callbackUrl" value={routes.root} />
-            <AnimatedButton
-              class="rounded-lg bg-red-500 py-2 text-white"
-              type="submit"
-            >
-              {t("settings.signOut@@Sign out")}
-            </AnimatedButton>
-          </Form>
+          <AnimatedButton
+            animation={{
+              scale: true,
+              shadow: true,
+            }}
+            class="shadow-red rounded-lg bg-red-600 p-2 text-white"
+            onClick$={handleSignOut}
+          >
+            {t("app.signOut@@Sign out")}
+          </AnimatedButton>
         </div>
       </div>
     </Page>

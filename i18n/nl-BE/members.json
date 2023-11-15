@@ -4,7 +4,7 @@
     "dateOfBirth": "Geboortedatum",
     "deleteMemberConfirmation": "Weet je zeker dat je dit lid wilt verwijderen?",
     "errors": {
-      "memberDoesNotExist": "Dit lid bestaat niet."
+      "memberDoesNotExist": "Dit lid bestaat niet"
     },
     "firstName": "Voornaam",
     "gender": "Geslacht",

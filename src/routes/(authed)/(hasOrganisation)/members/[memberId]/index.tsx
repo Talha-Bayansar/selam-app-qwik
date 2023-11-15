@@ -68,7 +68,7 @@ const MemberDetails = component$(() => {
 
   return (
     <Page
-      class="gap-4"
+      class="gap-4 md:max-w-lg"
       title={`${member.value.firstName} ${member.value.lastName}`}
     >
       <div class="flex gap-4">

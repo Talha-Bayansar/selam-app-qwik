@@ -32,6 +32,7 @@ module.exports = {
       boxShadow: {
         light: "0px 4px 16px 0px rgba(33,130,60,0.1)",
         dark: "0px 2px 8px 0px rgba(33,130,60,0.25)",
+        red: "0px 2px 8px 0px rgba(220,38,38,0.25)",
       },
       // fontSize: {
       //   header1: ["34px", { fontWeight: "700" }],

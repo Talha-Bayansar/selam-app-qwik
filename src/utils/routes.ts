@@ -5,4 +5,5 @@ export const routes = {
   members: "/members",
   groups: "/groups",
   organisations: "/organisations",
+  noAccess: "/no-access",
 };

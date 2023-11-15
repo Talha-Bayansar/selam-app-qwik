@@ -4,6 +4,7 @@ import type { Provider } from "@auth/core/providers";
 import { type Organisations, xata } from "~/db";
 import { XataAdapter } from "@auth/xata-adapter";
 import type {
+  RequestEvent,
   RequestEventAction,
   RequestEventLoader,
 } from "@builder.io/qwik-city";
@@ -53,7 +54,7 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   }));
 
 export const getServerSession = (
-  event: RequestEventLoader | RequestEventAction,
+  event: RequestEventLoader | RequestEventAction | RequestEvent,
 ) => {
   const session: CustomSession | null = event.sharedMap.get("session");
   return session;

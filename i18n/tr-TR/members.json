@@ -4,7 +4,7 @@
     "dateOfBirth": "Doğum tarihi",
     "deleteMemberConfirmation": "Bu üyeyi silmek istediğinizden emin misiniz?",
     "errors": {
-      "memberDoesNotExist": "Bu üye mevcut değil."
+      "memberDoesNotExist": "Bu üye mevcut değil"
     },
     "firstName": "İsim",
     "gender": "Cinsiyet",

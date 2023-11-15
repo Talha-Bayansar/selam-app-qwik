@@ -13,6 +13,8 @@
       "requiredField": "Bu alan zorunludur"
     },
     "notSelected": "Seçilmedi",
-    "settings": "Ayarlar"
+    "settings": "Ayarlar",
+    "signOut": "Çıkış yap",
+    "signOutConfirmation": "Çıkış yapmak istediğinizden emin misiniz?"
   }
 }
