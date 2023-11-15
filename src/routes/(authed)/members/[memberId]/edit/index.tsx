@@ -20,8 +20,8 @@ import { routes } from "~/utils";
 export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(
   async (requestEvent) => {
     const id = requestEvent.params.memberId;
-    const member = await xata.db.members
-      .filter({
+    const member = await xata(requestEvent.env)
+      .db.members.filter({
         id: id,
       })
       .getFirst();
@@ -40,14 +40,14 @@ export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(
   },
 );
 
-export const useGenders = routeLoader$(async () => {
-  const response = await xata.db.genders.getAll();
+export const useGenders = routeLoader$(async (event) => {
+  const response = await xata(event.env).db.genders.getAll();
   return response as GendersRecord[];
 });
 
 export const useEditMember = formAction$<TMembersForm>(async (data, event) => {
   try {
-    await xata.db.members.update({
+    await xata(event.env).db.members.update({
       id: event.params.memberId,
       firstName: data.firstName,
       lastName: data.lastName,

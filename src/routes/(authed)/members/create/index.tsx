@@ -25,8 +25,8 @@ export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(() => ({
   gender: "",
 }));
 
-export const useGenders = routeLoader$(async () => {
-  const response = await xata.db.genders.getAll();
+export const useGenders = routeLoader$(async (event) => {
+  const response = await xata(event.env).db.genders.getAll();
   return response as GendersRecord[];
 });
 
@@ -34,7 +34,7 @@ export const useAddMember = formAction$<TMembersForm>(async (data, event) => {
   const session = getServerSession(event);
 
   try {
-    await xata.db.members.create({
+    await xata(event.env).db.members.create({
       firstName: data.firstName,
       lastName: data.lastName,
       dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,

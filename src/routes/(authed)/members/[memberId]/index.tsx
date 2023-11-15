@@ -12,8 +12,8 @@ import { routes } from "~/utils";
 
 export const useMember = routeLoader$(async (requestEvent) => {
   const id = requestEvent.params.memberId;
-  const result = await xata.db.members
-    .filter({
+  const result = await xata(requestEvent.env)
+    .db.members.filter({
       id: id,
     })
     .select(["*", "gender.name"])
@@ -27,7 +27,7 @@ export const useMember = routeLoader$(async (requestEvent) => {
 });
 
 export const useDeleteMember = routeAction$(async (_, event) => {
-  const result = await xata.db.members.delete({
+  const result = await xata(event.env).db.members.delete({
     id: event.params.memberId,
   });
 

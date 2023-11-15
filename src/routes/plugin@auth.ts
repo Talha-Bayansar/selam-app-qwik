@@ -30,7 +30,7 @@ interface CustomSession {
 
 export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
   serverAuth$(({ env }) => ({
-    adapter: XataAdapter(xata),
+    adapter: XataAdapter(xata(env)),
     secret: env.get("AUTH_SECRET"),
     trustHost: true,
     callbacks: {

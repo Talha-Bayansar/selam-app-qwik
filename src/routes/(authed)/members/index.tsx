@@ -10,8 +10,8 @@ import { routes } from "~/utils";
 export const useMembers = routeLoader$(async (event) => {
   const session = getServerSession(event);
 
-  const response = await xata.db.members
-    .filter({
+  const response = await xata(event.env)
+    .db.members.filter({
       "organization.id": session?.user?.organisation?.id,
     })
     .getPaginated({
