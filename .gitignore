@@ -3,7 +3,6 @@
 /lib
 /lib-types
 /server
-/drizzle
 
 # Development
 node_modules
