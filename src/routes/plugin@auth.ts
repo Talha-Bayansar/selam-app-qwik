@@ -7,6 +7,7 @@ import type {
   RequestEventAction,
   RequestEventLoader,
 } from "@builder.io/qwik-city";
+import { routes } from "~/utils";
 
 type ISODateString = string;
 
@@ -39,6 +40,9 @@ export const { onRequest, useAuthSession, useAuthSignin, useAuthSignout } =
         }
         return session;
       },
+    },
+    pages: {
+      signIn: routes.signIn,
     },
     providers: [
       Google({

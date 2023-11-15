@@ -1,8 +1,7 @@
 import { component$, $ } from "@builder.io/qwik";
-import { Form, useLocation } from "@builder.io/qwik-city";
+import { Form } from "@builder.io/qwik-city";
 import {
   Speak,
-  type SpeakLocale,
   useSpeakConfig,
   useTranslate,
   useSpeakLocale,
@@ -17,26 +16,12 @@ const Settings = component$(() => {
   const signOut = useAuthSignout();
   const config = useSpeakConfig();
   const speakLocale = useSpeakLocale();
-  const loc = useLocation();
 
-  // Replace the locale and navigate to the new URL
-  const navigateByLocale$ = $((newLocaleJson: string) => {
-    const newLocale = JSON.parse(newLocaleJson) as SpeakLocale;
-    const url = new URL(location.href);
-    if (loc.params.lang) {
-      if (newLocale.lang !== config.defaultLocale.lang) {
-        url.pathname = url.pathname.replace(loc.params.lang, newLocale.lang);
-      } else {
-        url.pathname = url.pathname.replace(
-          new RegExp(`(/${loc.params.lang}/)|(/${loc.params.lang}$)`),
-          "/",
-        );
-      }
-    } else if (newLocale.lang !== config.defaultLocale.lang) {
-      url.pathname = `/${newLocale.lang}${url.pathname}`;
-    }
+  const changeLocale$ = $((newLocaleJson: string) => {
+    // Store locale in a cookie
+    document.cookie = `locale=${newLocaleJson};max-age=86400;path=/`;
 
-    location.href = url.toString();
+    location.reload();
   });
 
   return (
@@ -46,7 +31,7 @@ const Settings = component$(() => {
         <div class="flex flex-col gap-8 md:max-w-lg">
           <SelectField
             label={t("settings.language@@Language")}
-            onChange$={async (e) => await navigateByLocale$(e.target.value)}
+            onChange$={async (e) => await changeLocale$(e.target.value)}
           >
             {config.supportedLocales.map((locale) => (
               <option
