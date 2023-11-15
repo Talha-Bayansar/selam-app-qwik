@@ -92,9 +92,12 @@ const MemberDetails = component$(() => {
             },
           }}
           onClick$={handleDelete}
+          disabled={deleteMember.isRunning}
           class="rounded-lg border border-red-300 p-2 text-red-600"
         >
-          {t("app.delete@@Delete")}
+          {deleteMember.isRunning
+            ? t("app.deleting@@Deleting")
+            : t("app.delete@@Delete")}
         </AnimatedButton>
       </div>
       <div class="flex flex-col">

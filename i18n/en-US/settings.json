@@ -1,5 +1,6 @@
 {
   "settings": {
+    "language": "Language",
     "signOut": "Sign out",
     "title": "Settings"
   }

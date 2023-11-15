@@ -1,6 +1,7 @@
 {
   "settings": {
-    "signOut": "Sign out",
-    "title": "Settings"
+    "language": "Taal",
+    "signOut": "Afmelden",
+    "title": "Instellingen"
   }
 }

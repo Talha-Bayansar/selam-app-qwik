@@ -1,11 +1,9 @@
 {
   "root": {
     "apps": {
-      "groups": "Groups",
-      "members": "Members"
+      "groups": "Gruplar",
+      "members": "Üyeler"
     },
-    "dates": "Dates",
-    "numbers": "Numbers",
-    "title": "Apps"
+    "title": "Uygulamalar"
   }
 }

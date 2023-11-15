@@ -1,14 +1,15 @@
 {
   "members": {
-    "address": "Address",
-    "dateOfBirth": "Date of birth",
+    "address": "Adres",
+    "dateOfBirth": "Doğum tarihi",
+    "deleteMemberConfirmation": "Bu üyeyi silmek istediğinizden emin misiniz?",
     "errors": {
-      "createFailed": "Could not create new member."
+      "memberDoesNotExist": "Bu üye mevcut değil."
     },
-    "firstName": "First name",
-    "gender": "Gender",
-    "lastName": "Last name",
+    "firstName": "İsim",
+    "gender": "Cinsiyet",
+    "lastName": "Soyisim",
     "newMember": "Yeni Üye",
-    "title": "Members"
+    "title": "Üyeler"
   }
 }

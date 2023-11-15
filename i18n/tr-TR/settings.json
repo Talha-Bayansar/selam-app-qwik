@@ -1,6 +1,7 @@
 {
   "settings": {
-    "signOut": "Sign out",
-    "title": "Settings"
+    "language": "Dil",
+    "signOut": "Çıkış yap",
+    "title": "Ayarlar"
   }
 }

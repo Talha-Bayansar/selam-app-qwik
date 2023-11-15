@@ -1,15 +1,18 @@
 {
   "app": {
     "apps": "Apps",
-    "changeLocale": "Change locale",
-    "create": "Create",
-    "creating": "Creating",
+    "create": "Aanmaken",
+    "creating": "Aan het aanmaken",
+    "delete": "Verwijderen",
+    "deleting": "Aan het verwijderen",
+    "edit": "Bewerken",
+    "editing": "Aan het bewerken",
     "errors": {
-      "notSpecified": "Not specified",
-      "requiredField": "This field is required"
+      "notFound": "Niet gevonden",
+      "notSpecified": "Niet aangegeven",
+      "requiredField": "Dit veld is verplicht"
     },
-    "notSelected": "Not selected",
-    "settings": "Settings",
-    "title": "{{name}} demo"
+    "notSelected": "Niet geselecteerd",
+    "settings": "Instellingen"
   }
 }

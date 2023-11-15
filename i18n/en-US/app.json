@@ -1,15 +1,18 @@
 {
   "app": {
     "apps": "Apps",
-    "changeLocale": "Change locale",
     "create": "Create",
     "creating": "Creating",
+    "delete": "Delete",
+    "deleting": "Deleting",
+    "edit": "Edit",
+    "editing": "Editing",
     "errors": {
+      "notFound": "Not found",
       "notSpecified": "Not specified",
       "requiredField": "This field is required"
     },
     "notSelected": "Not selected",
-    "settings": "Settings",
-    "title": "{{name}} demo"
+    "settings": "Settings"
   }
 }

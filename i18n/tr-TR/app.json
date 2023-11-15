@@ -1,15 +1,18 @@
 {
   "app": {
-    "apps": "Apps",
-    "changeLocale": "Change locale",
-    "create": "Create",
-    "creating": "Creating",
+    "apps": "Uygulamalar",
+    "create": "Oluştur",
+    "creating": "Oluşturuluyor",
+    "delete": "Sil",
+    "deleting": "Siliniyor",
+    "edit": "Düzenle",
+    "editing": "Düzenleniliyor",
     "errors": {
-      "notSpecified": "Not specified",
-      "requiredField": "This field is required"
+      "notFound": "Bulunamadı",
+      "notSpecified": "Belirtilmedi",
+      "requiredField": "Bu alan zorunludur"
     },
-    "notSelected": "Not selected",
-    "settings": "Settings",
-    "title": "{{name}} demo"
+    "notSelected": "Seçilmedi",
+    "settings": "Ayarlar"
   }
 }
