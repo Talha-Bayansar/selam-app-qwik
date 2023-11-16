@@ -1,9 +1,25 @@
 {
-  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
-  "name": "Selam app",
-  "short_name": "Selam",
-  "start_url": ".",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "icon512_maskable.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "icon512_rounded.png",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "portrait",
   "display": "standalone",
-  "background_color": "#fff",
-  "description": "Selam app is and application built to manage all Selam related applications."
+  "dir": "auto",
+  "lang": "en-GB",
+  "name": "Selam",
+  "short_name": "Selam",
+  "start_url": "."
 }
