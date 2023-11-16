@@ -16,7 +16,12 @@ export const SelectField = component$(({ label, error, ...rest }: Props) => {
         {label}
         {rest.required && "*"}
       </span>
-      <select {...rest} class="border-primary rounded-lg border p-2">
+      <select
+        {...rest}
+        id={rest.name}
+        name={rest.name}
+        class="rounded-lg border border-primary p-2"
+      >
         <Slot />
       </select>
       {error && <p class="text-red-600">{error}</p>}

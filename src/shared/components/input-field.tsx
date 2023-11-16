@@ -19,7 +19,8 @@ export const InputField = component$(
         </span>
         <input
           {...rest}
-          class="border-primary rounded-lg border p-2"
+          id={name}
+          class="rounded-lg border border-primary p-2"
           type={type}
           name={name}
           placeholder={placeholder}

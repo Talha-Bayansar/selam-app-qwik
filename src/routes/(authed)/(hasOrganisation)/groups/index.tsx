@@ -1,13 +1,70 @@
 import { component$ } from "@builder.io/qwik";
-import { Speak } from "qwik-speak";
+import { routeLoader$ } from "@builder.io/qwik-city";
+import { Speak, useTranslate } from "qwik-speak";
+import { xata, type GroupsRecord } from "~/db";
+import { getServerSession } from "~/routes/plugin@auth";
+import { ListTile, Page } from "~/shared";
+
+type Group = {
+  membersCount: number;
+} & GroupsRecord;
+
+export const useGroups = routeLoader$(async (event) => {
+  const session = getServerSession(event);
+  const response = await xata(event.env)
+    .db.groups.filter({
+      "organization.id": session?.user?.organisation?.id,
+    })
+    .sort("name", "asc")
+    .getPaginated({
+      pagination: {
+        size: 20,
+      },
+    });
+  const groups: Group[] = [];
+  for (const groupRecord of response.records as GroupsRecord[]) {
+    const response = await xata(event.env).db.members_groups.aggregate({
+      count: {
+        count: {
+          filter: {
+            "group.id": groupRecord.id,
+          },
+        },
+      },
+    });
+    groups.push({
+      membersCount: response.aggs.count,
+      ...groupRecord,
+    });
+  }
+  return groups as Group[];
+});
 
 const Groups = component$(() => {
-  return <div>Groups page</div>;
+  const t = useTranslate();
+  const groups = useGroups();
+
+  return (
+    <Page title={t("groups.title@@Groups")}>
+      <div class="flex flex-col">
+        {groups.value.map((group, i) => (
+          <ListTile
+            key={group.id}
+            title={group.name!}
+            subTitle={`${t("groups.displayMemberCount@@Members: {{count}}", {
+              count: group.membersCount,
+            })}`}
+            isLastItem={i === groups.value.length - 1}
+          />
+        ))}
+      </div>
+    </Page>
+  );
 });
 
 export default component$(() => {
   return (
-    <Speak>
+    <Speak assets={["groups"]}>
       <Groups />
     </Speak>
   );

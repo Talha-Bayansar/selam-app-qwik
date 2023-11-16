@@ -3,6 +3,7 @@
     "address": "Address",
     "dateOfBirth": "Date of birth",
     "deleteMemberConfirmation": "Are you sure you want to delete this member?",
+    "editMember": "Edit member",
     "errors": {
       "memberDoesNotExist": "This member does not exist"
     },

@@ -1,10 +1,9 @@
-import { type QwikIntrinsicElements, component$ } from "@builder.io/qwik";
+import { component$ } from "@builder.io/qwik";
 import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { Speak, useFormatDate, useTranslate } from "qwik-speak";
-import { type ClassNameValue, twMerge } from "tailwind-merge";
 import { type MembersRecord, xata } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
-import { AnimatedButton, MaterialSymbolsAdd, Page } from "~/shared";
+import { FAB, ListTile, MaterialSymbolsAdd, Page } from "~/shared";
 import { routes } from "~/utils";
 
 export const useMembers = routeLoader$(async (event) => {
@@ -14,6 +13,7 @@ export const useMembers = routeLoader$(async (event) => {
     .db.members.filter({
       "organization.id": session?.user?.organisation?.id,
     })
+    .sort("firstName", "asc")
     .getPaginated({
       pagination: {
         size: 20,
@@ -25,30 +25,31 @@ export const useMembers = routeLoader$(async (event) => {
 
 const Members = component$(() => {
   const t = useTranslate();
+  const d = useFormatDate();
   const members = useMembers();
+
   return (
     <Page class="relative pb-8" title={t("members.title@@Members")}>
       <div class="flex flex-col">
         {members.value.map((member, i) => (
           <Link key={member.id} href={`${routes.members}/${member.id}`}>
-            <ListItem
-              member={member}
+            <ListTile
+              title={`${member.firstName} ${member.lastName}`}
+              subTitle={
+                member.dateOfBirth
+                  ? d(member.dateOfBirth, {
+                      dateStyle: "long",
+                    })
+                  : t("app.errors.notSpecified@@Not specified")
+              }
               isLastItem={members.value.length <= i + 1}
             />
           </Link>
         ))}
       </div>
-      <Link
-        href={`${routes.members}/create`}
-        class="fixed bottom-28 right-8 md:bottom-16 md:right-16"
-      >
-        <AnimatedButton
-          class="bg-primary shadow-dark rounded-full p-4 text-white"
-          animation={{ scale: true, shadow: true }}
-        >
-          <MaterialSymbolsAdd size={24} />
-        </AnimatedButton>
-      </Link>
+      <FAB href={`${routes.members}/create`}>
+        <MaterialSymbolsAdd size={24} />
+      </FAB>
     </Page>
   );
 });
@@ -60,43 +61,5 @@ export default component$(() => {
     </Speak>
   );
 });
-
-type ListItemProps = {
-  isLastItem: boolean;
-  member: MembersRecord;
-} & QwikIntrinsicElements["button"];
-
-const ListItem = component$(
-  ({ isLastItem, member, ...rest }: ListItemProps) => {
-    const t = useTranslate();
-    const d = useFormatDate();
-    return (
-      <>
-        <AnimatedButton
-          {...rest}
-          animation={{
-            background: true,
-          }}
-          class={twMerge(
-            "flex flex-col gap-1 py-2 transition-colors",
-            rest.class as ClassNameValue,
-          )}
-        >
-          <div>
-            {member.firstName} {member.lastName}
-          </div>
-          <div class="text-xs opacity-75">
-            {member.dateOfBirth
-              ? d(member.dateOfBirth, {
-                  dateStyle: "long",
-                })
-              : t("app.errors.notSpecified@@Not specified")}
-          </div>
-        </AnimatedButton>
-        {!isLastItem && <hr />}
-      </>
-    );
-  },
-);
 
 //TODO: add meta data

@@ -33,7 +33,7 @@ export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(
     return {
       firstName: member.firstName,
       lastName: member.lastName,
-      dateOfBirth: member.dateOfBirth?.toISOString().split("T")[0],
+      dateOfBirth: member.dateOfBirth?.toISOString().split("T")[0] ?? "",
       address: member.address,
       gender: member.gender?.id ?? "",
     };
@@ -96,7 +96,7 @@ export const EditMember = component$(() => {
     },
   ];
   return (
-    <Page class="flex-grow" title={t("members.newMember@@New member")}>
+    <Page class="flex-grow" title={t("members.editMember@@Edit member")}>
       <Form class="flex flex-grow flex-col justify-between md:w-full md:max-w-lg md:justify-start md:gap-8">
         <div class="flex flex-col gap-4">
           {inputFields.map((inputField) => (
@@ -138,7 +138,7 @@ export const EditMember = component$(() => {
         <AnimatedButton
           animation={{ scale: true, shadow: true }}
           type="submit"
-          class="bg-primary shadow-dark rounded-lg py-2 text-white"
+          class="rounded-lg bg-primary py-2 text-white shadow-dark"
           disabled={membersForm.submitting}
         >
           {membersForm.submitting

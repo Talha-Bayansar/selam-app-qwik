@@ -1,4 +1,3 @@
-import { component$, Slot } from "@builder.io/qwik";
 import { type RequestHandler } from "@builder.io/qwik-city";
 import { routes } from "~/utils";
 import { getServerSession } from "../plugin@auth";
@@ -12,7 +11,3 @@ export const onRequest: RequestHandler = (event) => {
     );
   }
 };
-
-export default component$(() => {
-  return <Slot />;
-});

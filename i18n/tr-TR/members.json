@@ -3,6 +3,7 @@
     "address": "Adres",
     "dateOfBirth": "Doğum tarihi",
     "deleteMemberConfirmation": "Bu üyeyi silmek istediğinizden emin misiniz?",
+    "editMember": "Üye Düzenleme",
     "errors": {
       "memberDoesNotExist": "Bu üye mevcut değil"
     },
