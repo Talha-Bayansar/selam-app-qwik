@@ -1,4 +1,6 @@
-import { type RequestHandler } from "@builder.io/qwik-city";
+import { Slot, component$ } from "@builder.io/qwik";
+import { type RequestHandler, useLocation } from "@builder.io/qwik-city";
+import { Spinner } from "~/shared";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
   // Control caching for this request for best performance and to reduce hosting costs:
@@ -10,3 +12,15 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
     maxAge: 5,
   });
 };
+
+export default component$(() => {
+  const loc = useLocation();
+  return (
+    <div class="min-h-screen w-screen">
+      <Slot />
+      {loc.isNavigating && (
+        <Spinner size={16} class="fixed right-2 top-2 md:left-2" />
+      )}
+    </div>
+  );
+});

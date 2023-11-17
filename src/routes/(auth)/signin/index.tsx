@@ -23,9 +23,9 @@ export const SignIn = component$(() => {
           value={loc.url.searchParams.get("callbackUrl") ?? routes.root}
         />
         <AnimatedButton
-          class="shadow-dark bg-primary rounded-lg p-2 text-white"
+          class="rounded-lg bg-primary p-2 text-white shadow-dark"
           animation={{
-            background: true,
+            scale: true,
             shadow: true,
           }}
         >
