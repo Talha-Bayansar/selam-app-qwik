@@ -18,7 +18,7 @@ addEventListener("install", (e) => {
   const event = e as ExtendableEvent;
   const preCache = async () => {
     const cache = await caches.open(cacheName);
-    return cache.addAll(["/", "/signin", "/settings"]);
+    return cache.addAll(["/", "/signin", "no-access", "/settings"]);
   };
   event.waitUntil(preCache());
 });
