@@ -14,9 +14,9 @@ import {
   precacheAndRoute,
 } from "workbox-precaching";
 import { NavigationRoute, registerRoute } from "workbox-routing";
-import { CacheFirst } from "workbox-strategies";
+import { CacheFirst, NetworkFirst } from "workbox-strategies";
 
-const revision = import.meta.env.VITE_GIT_COMMIT_HASH;
+const revision = Date.now().toString();
 
 precacheAndRoute([
   { url: "/", revision },
@@ -33,6 +33,14 @@ registerRoute(new NavigationRoute(createHandlerBoundToURL("/")));
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/no-access/")));
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/settings/")));
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/signin/")));
+registerRoute(
+  ({ url }) =>
+    !url.pathname.startsWith("/no-access/") &&
+    !url.pathname.startsWith("/settings/") &&
+    !url.pathname.startsWith("/signin/") &&
+    url.pathname !== "/",
+  new NetworkFirst(),
+);
 registerRoute(
   ({ request }) =>
     request.destination === "style" || request.destination === "image",
