@@ -11,21 +11,8 @@ import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
 
 setupServiceWorker();
 
-const cacheName = "selam-app";
+addEventListener("install", () => self.skipWaiting());
 
-addEventListener("install", (e) => {
-  console.log("[Service worker] install", e);
-  const event = e as ExtendableEvent;
-  const preCache = async () => {
-    const cache = await caches.open(cacheName);
-    return cache.addAll(["/", "/signin", "no-access", "/settings"]);
-  };
-  event.waitUntil(preCache());
-});
-
-addEventListener("activate", (e) => {
-  console.log("[Service worker] activate", e);
-  return self.clients.claim();
-});
+addEventListener("activate", () => self.clients.claim());
 
 declare const self: ServiceWorkerGlobalScope;
