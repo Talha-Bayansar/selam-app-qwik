@@ -9,13 +9,14 @@
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
 
-import { offlineFallback } from "workbox-recipes";
-import { setDefaultHandler } from "workbox-routing";
-import { NetworkOnly } from "workbox-strategies";
+import { warmStrategyCache } from "workbox-recipes";
+import { CacheFirst } from "workbox-strategies";
 
-setDefaultHandler(new NetworkOnly());
+// This can be any strategy, CacheFirst used as an example.
+const strategy = new CacheFirst();
+const urls = ["/offline"];
 
-offlineFallback();
+warmStrategyCache({ urls, strategy });
 
 setupServiceWorker();
 
