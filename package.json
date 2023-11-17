@@ -60,6 +60,9 @@
     "@modular-forms/qwik": "^0.21.0",
     "@xata.io/client": "^0.27.0",
     "tailwind-merge": "^2.0.0",
-    "valibot": "^0.20.1"
+    "valibot": "^0.20.1",
+    "workbox-precaching": "^7.0.0",
+    "workbox-routing": "^7.0.0",
+    "workbox-strategies": "^7.0.0"
   }
 }
