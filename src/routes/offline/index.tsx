@@ -1,12 +1,24 @@
 import { component$ } from "@builder.io/qwik";
+import { Link } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
-import { Page } from "~/shared";
+import { AnimatedButton, Page } from "~/shared";
 
 export const Offline = component$(() => {
   const t = useTranslate();
   return (
-    <Page title={t("offline.oops@@Oops!")}>
+    <Page class="gap-4 md:max-w-lg" title={t("offline.oops@@Oops!")}>
       <p>{t("offline.description@@It looks like you are offline.")}</p>
+      <Link reload>
+        <AnimatedButton
+          class="rounded-lg bg-primary py-2 text-white shadow-dark"
+          animation={{
+            scale: true,
+            shadow: true,
+          }}
+        >
+          {t("offline.retry@@Retry")}
+        </AnimatedButton>
+      </Link>
     </Page>
   );
 });

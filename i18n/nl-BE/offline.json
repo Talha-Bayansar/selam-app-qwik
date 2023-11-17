@@ -1,6 +1,7 @@
 {
   "offline": {
     "description": "Het lijkt erop dat je offline bent.",
-    "oops": "Oeps!"
+    "oops": "Oeps!",
+    "retry": "Opnieuw proberen"
   }
 }

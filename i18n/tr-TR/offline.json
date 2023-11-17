@@ -1,6 +1,7 @@
 {
   "offline": {
     "description": "Görünüşe göre çevrimdışısınız.",
-    "oops": "Hay Allah!"
+    "oops": "Hay Allah!",
+    "retry": "Yeniden dene"
   }
 }
