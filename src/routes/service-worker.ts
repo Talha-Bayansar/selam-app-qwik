@@ -18,7 +18,7 @@ addEventListener("install", (e) => {
   const event = e as ExtendableEvent;
   const preCache = async () => {
     const cache = await caches.open(cacheName);
-    return cache.addAll(["/", "/settings"]);
+    return cache.addAll(["/", "/signin", "/settings"]);
   };
   event.waitUntil(preCache());
 });
@@ -26,27 +26,6 @@ addEventListener("install", (e) => {
 addEventListener("activate", (e) => {
   console.log("[Service worker] activate", e);
   return self.clients.claim();
-});
-
-addEventListener("fetch", (e) => {
-  console.log("[Service worker] fetch", e);
-  const event = e as FetchEvent;
-  event.respondWith(
-    (async () => {
-      const r = await caches.match(event.request);
-      console.log(`[Service Worker] Fetching resource: ${event.request.url}`);
-      if (r) {
-        return r;
-      }
-      const response = await fetch(event.request);
-      const cache = await caches.open(cacheName);
-      console.log(
-        `[Service Worker] Caching new resource: ${event.request.url}`,
-      );
-      cache.put(event.request, response.clone());
-      return response;
-    })(),
-  );
 });
 
 declare const self: ServiceWorkerGlobalScope;
