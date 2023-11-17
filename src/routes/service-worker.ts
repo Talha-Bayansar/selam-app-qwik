@@ -18,7 +18,7 @@ addEventListener("install", (e) => {
   const event = e as ExtendableEvent;
   const preCache = async () => {
     const cache = await caches.open(cacheName);
-    return cache.addAll(["/", "/settings", "/static/styles.css"]);
+    return cache.addAll(["/", "/settings"]);
   };
   event.waitUntil(preCache());
 });
