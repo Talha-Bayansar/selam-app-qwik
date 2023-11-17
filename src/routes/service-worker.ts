@@ -8,7 +8,7 @@
  * You can also use this file to add more functionality that runs in the service worker.
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
-import { createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
+import { precacheAndRoute } from "workbox-precaching";
 import {
   NavigationRoute,
   registerRoute,
@@ -21,7 +21,20 @@ const revision = Date.now().toString();
 precacheAndRoute([{ url: "/offline", revision }]);
 
 // Set up a route to handle navigation requests
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/offline")));
+registerRoute(
+  new NavigationRoute(async ({ event }) => {
+    // Check if the browser is offline
+    if (!navigator.onLine) {
+      const response = await caches.match("/offline");
+      if (response) {
+        return response;
+      } // Redirect navigation to offline page
+    }
+    const e = event as FetchEvent;
+    // Otherwise, proceed with the requested URL
+    return fetch(e.request);
+  }),
+);
 
 // Set the default handler for non-navigation requests
 setDefaultHandler(new StaleWhileRevalidate());
