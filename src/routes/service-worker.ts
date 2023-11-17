@@ -8,44 +8,23 @@
  * You can also use this file to add more functionality that runs in the service worker.
  */
 import { setupServiceWorker } from "@builder.io/qwik-city/service-worker";
+import { createHandlerBoundToURL, precacheAndRoute } from "workbox-precaching";
 import {
-  cleanupOutdatedCaches,
-  createHandlerBoundToURL,
-  precacheAndRoute,
-} from "workbox-precaching";
-import { NavigationRoute, registerRoute } from "workbox-routing";
-import { CacheFirst, NetworkFirst } from "workbox-strategies";
+  NavigationRoute,
+  registerRoute,
+  setDefaultHandler,
+} from "workbox-routing";
+import { StaleWhileRevalidate } from "workbox-strategies";
 
 const revision = Date.now().toString();
 
-precacheAndRoute([
-  { url: "/", revision },
-  { url: "/no-access/", revision },
-  { url: "/settings/", revision },
-  { url: "/signin/", revision },
-  { url: "/manifest.json", revision },
-  { url: "/icon512_maskable.png", revision },
-  { url: "/icon512_rounded.png", revision },
-  { url: "/splash_screens/icon.png", revision },
-]);
-cleanupOutdatedCaches();
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/")));
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/no-access/")));
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/settings/")));
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/signin/")));
-registerRoute(
-  ({ url }) =>
-    !url.pathname.startsWith("/no-access/") &&
-    !url.pathname.startsWith("/settings/") &&
-    !url.pathname.startsWith("/signin/") &&
-    url.pathname !== "/",
-  new NetworkFirst(),
-);
-registerRoute(
-  ({ request }) =>
-    request.destination === "style" || request.destination === "image",
-  new CacheFirst(),
-);
+precacheAndRoute([{ url: "/offline", revision }]);
+
+// Set up a route to handle navigation requests
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/offline")));
+
+// Set the default handler for non-navigation requests
+setDefaultHandler(new StaleWhileRevalidate());
 
 setupServiceWorker();
 
