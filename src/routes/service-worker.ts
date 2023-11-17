@@ -20,18 +20,19 @@ const revision = import.meta.env.VITE_GIT_COMMIT_HASH;
 
 precacheAndRoute([
   { url: "/", revision },
-  { url: "/no-access", revision },
-  { url: "/settings", revision },
-  { url: "/signin", revision },
+  { url: "/no-access/", revision },
+  { url: "/settings/", revision },
+  { url: "/signin/", revision },
   { url: "/manifest.json", revision },
   { url: "/icon512_maskable.png", revision },
   { url: "/icon512_rounded.png", revision },
+  { url: "/splash_screens/icon.png", revision },
 ]);
 cleanupOutdatedCaches();
 registerRoute(new NavigationRoute(createHandlerBoundToURL("/")));
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/no-access")));
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/settings")));
-registerRoute(new NavigationRoute(createHandlerBoundToURL("/signin")));
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/no-access/")));
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/settings/")));
+registerRoute(new NavigationRoute(createHandlerBoundToURL("/signin/")));
 registerRoute(
   ({ request }) =>
     request.destination === "style" || request.destination === "image",
