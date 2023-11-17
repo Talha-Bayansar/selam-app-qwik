@@ -190,6 +190,11 @@ export const RouterHead = component$(() => {
 
       <link rel="icon" href="/splash_screens/icon.png" />
       <link rel="apple-touch-icon" href="/splash_screens/icon.png" />
+      <meta name="mobile-web-app-capable" content="yes" />
+      <meta name="apple-touch-fullscreen" content="yes" />
+      <meta name="apple-mobile-web-app-title" content="Selam" />
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
       {head.meta.map((m) => (
         <meta
