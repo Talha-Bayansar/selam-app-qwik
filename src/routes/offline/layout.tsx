@@ -1,5 +1,3 @@
-import { Slot, component$ } from "@builder.io/qwik";
-
 import { type RequestHandler } from "@builder.io/qwik-city";
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
@@ -13,13 +11,3 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
     maxAge: 5,
   });
 };
-
-export default component$(() => {
-  return (
-    <div class="flex min-h-screen flex-col">
-      <main class="flex flex-grow flex-col p-8">
-        <Slot />
-      </main>
-    </div>
-  );
-});
