@@ -7,14 +7,18 @@ import {
 } from "@builder.io/qwik-city";
 import { Speak, useFormatDate, useTranslate } from "qwik-speak";
 import { type MembersRecord, xata } from "~/db";
+import { getServerSession } from "~/routes/plugin@auth";
 import { AnimatedButton, Page } from "~/shared";
 import { routes } from "~/utils";
 
 export const useMember = routeLoader$(async (requestEvent) => {
+  const session = getServerSession(requestEvent);
+
   const id = requestEvent.params.memberId;
   const result = await xata(requestEvent.env)
     .db.members.filter({
       id: id,
+      "organization.id": session?.user?.organisation?.id,
     })
     .select(["*", "gender.name"])
     .getFirst();
@@ -80,7 +84,7 @@ const MemberDetails = component$(() => {
             animation={{
               background: true,
             }}
-            class="border-secondary rounded-lg border p-2"
+            class="rounded-lg border border-secondary p-2"
           >
             {t("app.edit@@Edit")}
           </AnimatedButton>

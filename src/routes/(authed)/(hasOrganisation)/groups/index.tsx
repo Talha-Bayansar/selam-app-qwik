@@ -1,9 +1,10 @@
 import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { Link, routeLoader$ } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import { xata, type GroupsRecord } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
 import { ListTile, Page } from "~/shared";
+import { routes } from "~/utils";
 
 type Group = {
   membersCount: number;
@@ -48,14 +49,15 @@ const Groups = component$(() => {
     <Page title={t("groups.title@@Groups")}>
       <div class="flex flex-col">
         {groups.value.map((group, i) => (
-          <ListTile
-            key={group.id}
-            title={group.name!}
-            subTitle={`${t("groups.displayMemberCount@@Members: {{count}}", {
-              count: group.membersCount,
-            })}`}
-            isLastItem={i === groups.value.length - 1}
-          />
+          <Link key={group.id} href={`${routes.groups}/${group.id}`}>
+            <ListTile
+              title={group.name!}
+              subTitle={`${t("groups.displayMemberCount@@Members: {{count}}", {
+                count: group.membersCount,
+              })}`}
+              isLastItem={i === groups.value.length - 1}
+            />
+          </Link>
         ))}
       </div>
     </Page>
