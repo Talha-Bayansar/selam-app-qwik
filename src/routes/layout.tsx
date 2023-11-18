@@ -1,6 +1,18 @@
 import { Slot, component$ } from "@builder.io/qwik";
-import { useLocation } from "@builder.io/qwik-city";
+import { type RequestHandler, useLocation } from "@builder.io/qwik-city";
 import { Spinner } from "~/shared";
+
+export const onGet: RequestHandler = async ({ cacheControl }) => {
+  // Control caching for this request for best performance and to reduce hosting costs:
+  // https://qwik.builder.io/docs/caching/
+  cacheControl({
+    public: false,
+    // Always serve a cached response by default, up to a week stale
+    staleWhileRevalidate: 60 * 60 * 24 * 7,
+    // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
+    maxAge: 0,
+  });
+};
 
 export default component$(() => {
   const loc = useLocation();
