@@ -12,7 +12,7 @@ import {
   MembersFormSchema,
   type TInputField,
 } from "~/members";
-import { AnimatedButton, InputField, Page, SelectField } from "~/shared";
+import { ElevatedButton, InputField, Page, SelectField } from "~/shared";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { xata, type GendersRecord } from "~/db";
 import { routes } from "~/utils";
@@ -135,16 +135,11 @@ export const EditMember = component$(() => {
             )}
           </Field>
         </div>
-        <AnimatedButton
-          animation={{ scale: true, shadow: true }}
-          type="submit"
-          class="rounded-lg bg-primary py-2 text-white shadow-dark"
-          disabled={membersForm.submitting}
-        >
+        <ElevatedButton type="submit" disabled={membersForm.submitting}>
           {membersForm.submitting
             ? t("app.editing@@Editing")
             : t("app.edit@@Edit")}
-        </AnimatedButton>
+        </ElevatedButton>
       </Form>
     </Page>
   );

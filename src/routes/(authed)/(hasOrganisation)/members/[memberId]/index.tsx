@@ -1,13 +1,9 @@
 import { $, component$ } from "@builder.io/qwik";
-import {
-  routeAction$,
-  routeLoader$,
-  useLocation,
-} from "@builder.io/qwik-city";
+import { routeAction$, routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { Speak, useFormatDate, useTranslate } from "qwik-speak";
 import { type MembersRecord, xata } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
-import { AnimatedButton, Page } from "~/shared";
+import { OutlinedButton, Page } from "~/shared";
 import { routes } from "~/utils";
 
 export const useMember = routeLoader$(async (requestEvent) => {
@@ -79,16 +75,9 @@ const MemberDetails = component$(() => {
           href={`${routes.members}/${loc.params.memberId}/edit`}
           class="w-full"
         >
-          <AnimatedButton
-            animation={{
-              background: true,
-            }}
-            class="rounded-lg border border-secondary p-2"
-          >
-            {t("app.edit@@Edit")}
-          </AnimatedButton>
+          <OutlinedButton>{t("app.edit@@Edit")}</OutlinedButton>
         </a>
-        <AnimatedButton
+        <OutlinedButton
           animation={{
             background: {
               class: "bg-red-100",
@@ -96,12 +85,12 @@ const MemberDetails = component$(() => {
           }}
           onClick$={handleDelete}
           disabled={deleteMember.isRunning}
-          class="rounded-lg border border-red-300 p-2 text-red-600"
+          class="border-red-300 p-2 text-red-600"
         >
           {deleteMember.isRunning
             ? t("app.deleting@@Deleting")
             : t("app.delete@@Delete")}
-        </AnimatedButton>
+        </OutlinedButton>
       </div>
       <div class="flex flex-col">
         <p>

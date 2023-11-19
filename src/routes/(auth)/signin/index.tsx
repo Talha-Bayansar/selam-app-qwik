@@ -2,7 +2,7 @@ import { component$ } from "@builder.io/qwik";
 import { Form, useLocation } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import { useAuthSignin } from "~/routes/plugin@auth";
-import { AnimatedButton, Page } from "~/shared";
+import { ElevatedButton, Page } from "~/shared";
 import { routes } from "~/utils";
 
 export const SignIn = component$(() => {
@@ -22,15 +22,7 @@ export const SignIn = component$(() => {
           name="options.callbackUrl"
           value={loc.url.searchParams.get("callbackUrl") ?? routes.root}
         />
-        <AnimatedButton
-          class="rounded-lg bg-primary p-2 text-white shadow-dark"
-          animation={{
-            scale: true,
-            shadow: true,
-          }}
-        >
-          {t("auth.signIn@@Sign in")}
-        </AnimatedButton>
+        <ElevatedButton>{t("auth.signIn@@Sign in")}</ElevatedButton>
       </Form>
     </Page>
   );

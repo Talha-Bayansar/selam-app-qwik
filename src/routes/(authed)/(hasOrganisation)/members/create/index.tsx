@@ -14,7 +14,7 @@ import {
   type TMembersForm,
 } from "~/members";
 import { getServerSession } from "~/routes/plugin@auth";
-import { AnimatedButton, InputField, Page, SelectField } from "~/shared";
+import { ElevatedButton, InputField, Page, SelectField } from "~/shared";
 import { routes } from "~/utils";
 
 export const useFormLoader = routeLoader$<InitialValues<TMembersForm>>(() => ({
@@ -123,16 +123,11 @@ const CreateMember = component$(() => {
             )}
           </Field>
         </div>
-        <AnimatedButton
-          animation={{ scale: true, shadow: true }}
-          type="submit"
-          class="bg-primary shadow-dark rounded-lg py-2 text-white"
-          disabled={membersForm.submitting}
-        >
+        <ElevatedButton type="submit" disabled={membersForm.submitting}>
           {membersForm.submitting
             ? t("app.creating@@Creating")
             : t("app.create@@Create")}
-        </AnimatedButton>
+        </ElevatedButton>
       </Form>
     </Page>
   );

@@ -6,7 +6,7 @@ import {
   useSpeakLocale,
 } from "qwik-speak";
 import { useAuthSession, useAuthSignout } from "~/routes/plugin@auth";
-import { AnimatedButton, Page, SelectField } from "~/shared";
+import { ElevatedButton, Page, SelectField } from "~/shared";
 import { routes } from "~/utils";
 
 const Settings = component$(() => {
@@ -53,16 +53,12 @@ const Settings = component$(() => {
               </option>
             ))}
           </SelectField>
-          <AnimatedButton
-            animation={{
-              scale: true,
-              shadow: true,
-            }}
-            class="shadow-red rounded-lg bg-red-600 p-2 text-white"
+          <ElevatedButton
+            class="bg-red-600 shadow-red"
             onClick$={handleSignOut}
           >
             {t("app.signOut@@Sign out")}
-          </AnimatedButton>
+          </ElevatedButton>
         </div>
       </div>
     </Page>
