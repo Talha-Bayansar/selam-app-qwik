@@ -1,6 +1,5 @@
 import { $, component$ } from "@builder.io/qwik";
 import {
-  Link,
   routeAction$,
   routeLoader$,
   useLocation,
@@ -76,7 +75,7 @@ const MemberDetails = component$(() => {
       title={`${member.value.firstName} ${member.value.lastName}`}
     >
       <div class="flex gap-4">
-        <Link
+        <a
           href={`${routes.members}/${loc.params.memberId}/edit`}
           class="w-full"
         >
@@ -88,7 +87,7 @@ const MemberDetails = component$(() => {
           >
             {t("app.edit@@Edit")}
           </AnimatedButton>
-        </Link>
+        </a>
         <AnimatedButton
           animation={{
             background: {

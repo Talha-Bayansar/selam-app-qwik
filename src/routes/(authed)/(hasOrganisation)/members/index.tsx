@@ -1,5 +1,5 @@
 import { component$ } from "@builder.io/qwik";
-import { Link, routeLoader$ } from "@builder.io/qwik-city";
+import { routeLoader$ } from "@builder.io/qwik-city";
 import { Speak, useFormatDate, useTranslate } from "qwik-speak";
 import { type MembersRecord, xata } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
@@ -32,7 +32,7 @@ const Members = component$(() => {
     <Page class="relative pb-8" title={t("members.title@@Members")}>
       <div class="flex flex-col">
         {members.value.map((member, i) => (
-          <Link key={member.id} href={`${routes.members}/${member.id}`}>
+          <a key={member.id} href={`${routes.members}/${member.id}`}>
             <ListTile
               title={`${member.firstName} ${member.lastName}`}
               subTitle={
@@ -44,7 +44,7 @@ const Members = component$(() => {
               }
               isLastItem={members.value.length <= i + 1}
             />
-          </Link>
+          </a>
         ))}
       </div>
       <FAB href={`${routes.members}/create`}>

@@ -1,5 +1,5 @@
 import { Slot, component$ } from "@builder.io/qwik";
-import { Link, type LinkProps } from "@builder.io/qwik-city";
+import { type LinkProps } from "@builder.io/qwik-city";
 import { AnimatedButton } from "./animated-button";
 import { type ClassNameValue, twMerge } from "tailwind-merge";
 
@@ -7,7 +7,7 @@ type Props = LinkProps;
 
 export const FAB = component$((props: Props) => {
   return (
-    <Link
+    <a
       href={props.href}
       class={twMerge(
         "fixed bottom-28 right-8 md:bottom-16 md:right-16",
@@ -20,6 +20,6 @@ export const FAB = component$((props: Props) => {
       >
         <Slot />
       </AnimatedButton>
-    </Link>
+    </a>
   );
 });

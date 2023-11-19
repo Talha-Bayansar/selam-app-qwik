@@ -1,5 +1,5 @@
 import { component$, type JSXChildren, Slot } from "@builder.io/qwik";
-import { Link, useLocation, type RequestHandler } from "@builder.io/qwik-city";
+import { useLocation, type RequestHandler } from "@builder.io/qwik-city";
 import { useTranslate } from "qwik-speak";
 import { twMerge } from "tailwind-merge";
 import {
@@ -65,7 +65,7 @@ export default component$(() => {
       <nav class="md:shadow-light fixed bottom-0 left-0 right-0 flex justify-evenly bg-gradient-to-t from-white from-80% to-transparent pb-8 pt-4 md:relative md:flex-col md:justify-start md:gap-4 md:px-4 md:py-6">
         {navItems.map((item) => {
           return (
-            <Link
+            <a
               key={item.name}
               href={item.href}
               class={twMerge(
@@ -79,7 +79,7 @@ export default component$(() => {
               >
                 {item.icon}
               </AnimatedButton>
-            </Link>
+            </a>
           );
         })}
       </nav>

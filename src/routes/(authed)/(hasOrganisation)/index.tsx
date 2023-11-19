@@ -1,5 +1,5 @@
 import { type JSXChildren, component$ } from "@builder.io/qwik";
-import { Link, type DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import {
   AnimatedButton,
@@ -34,18 +34,18 @@ export const Apps = component$(() => {
     <Page title={t("root.title@@Apps")}>
       <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
         {apps.map((app) => (
-          <Link key={app.name} href={app.href}>
+          <a key={app.name} href={app.href}>
             <AnimatedButton
               animation={{
                 scale: true,
                 shadow: true,
               }}
-              class="shadow-dark flex flex-col items-center justify-center rounded-lg p-4"
+              class="flex flex-col items-center justify-center rounded-lg p-4 shadow-dark"
             >
               {app.icon}
               {app.name}
             </AnimatedButton>
-          </Link>
+          </a>
         ))}
       </div>
     </Page>
