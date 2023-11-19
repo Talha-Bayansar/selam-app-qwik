@@ -195,6 +195,7 @@ export const RouterHead = component$(() => {
       <meta name="apple-mobile-web-app-title" content="Selam" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      <meta name="theme_color" content="#ffffff" />
 
       {head.meta.map((m) => (
         <meta
