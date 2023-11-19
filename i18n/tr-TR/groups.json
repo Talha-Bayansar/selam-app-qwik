@@ -2,6 +2,7 @@
   "groups": {
     "deleteGroupConfirmation": "Bu grubu silmek istediğinizden emin misiniz?",
     "displayMemberCount": "Üyeler: {{count}}",
+    "editGroup": "Grup düzenleme",
     "errors": {
       "groupDoesNotExist": "Bu grup mevcut değildir."
     },

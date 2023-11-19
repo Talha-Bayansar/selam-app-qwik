@@ -75,7 +75,7 @@ const GroupDetails = component$(() => {
   });
 
   return (
-    <Page title={group.value.name!}>
+    <Page class="gap-4 md:max-w-lg" title={group.value.name!}>
       <div class="flex gap-4">
         <a href={`${routes.groups}/${loc.params.groupId}/edit`} class="w-full">
           <OutlinedButton>{t("app.edit@@Edit")}</OutlinedButton>
