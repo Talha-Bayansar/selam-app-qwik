@@ -1,5 +1,6 @@
 {
   "groups": {
+    "deleteGroupConfirmation": "Bu grubu silmek istediğinizden emin misiniz?",
     "displayMemberCount": "Üyeler: {{count}}",
     "errors": {
       "groupDoesNotExist": "Bu grup mevcut değildir."
