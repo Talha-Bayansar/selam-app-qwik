@@ -3,7 +3,7 @@ import { routeLoader$ } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import { xata, type GroupsRecord } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
-import { ListTile, Page } from "~/shared";
+import { FAB, ListTile, MaterialSymbolsAdd, Page } from "~/shared";
 import { routes } from "~/utils";
 
 type Group = {
@@ -60,6 +60,9 @@ const Groups = component$(() => {
           </a>
         ))}
       </div>
+      <FAB href={`${routes.groups}/create`}>
+        <MaterialSymbolsAdd size={24} />
+      </FAB>
     </Page>
   );
 });

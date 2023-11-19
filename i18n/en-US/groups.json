@@ -1,6 +1,11 @@
 {
   "groups": {
     "displayMemberCount": "Members: {{count}}",
+    "errors": {
+      "groupDoesNotExist": "This group does not exist."
+    },
+    "name": "Name",
+    "newGroup": "New group",
     "title": "Groups"
   }
 }

@@ -1,6 +1,11 @@
 {
   "groups": {
     "displayMemberCount": "Üyeler: {{count}}",
+    "errors": {
+      "groupDoesNotExist": "Bu grup mevcut değildir."
+    },
+    "name": "İsim",
+    "newGroup": "Yeni grup",
     "title": "Gruplar"
   }
 }

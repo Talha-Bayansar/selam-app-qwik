@@ -1,6 +1,11 @@
 {
   "groups": {
     "displayMemberCount": "Leden: {{count}}",
+    "errors": {
+      "groupDoesNotExist": "Deze groep bestaat niet."
+    },
+    "name": "Naam",
+    "newGroup": "Nieuwe groep",
     "title": "Groepen"
   }
 }
