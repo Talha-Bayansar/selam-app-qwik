@@ -1,9 +1,10 @@
-import { component$ } from "@builder.io/qwik";
-import { routeLoader$ } from "@builder.io/qwik-city";
+import { $, component$ } from "@builder.io/qwik";
+import { routeAction$, routeLoader$, useLocation } from "@builder.io/qwik-city";
 import { Speak, useTranslate } from "qwik-speak";
 import { type GroupsRecord, xata } from "~/db";
 import { getServerSession } from "~/routes/plugin@auth";
-import { Page } from "~/shared";
+import { OutlinedButton, Page } from "~/shared";
+import { routes } from "~/utils";
 
 type Group = {
   membersCount: number;
@@ -36,9 +37,23 @@ export const useGroup = routeLoader$(async (event) => {
   return { ...response, membersCount: aggregate.aggs.count } as Group | null;
 });
 
+export const useDeleteGroup = routeAction$(async (_, event) => {
+  const result = await xata(event.env).db.groups.delete({
+    id: event.params.groupId,
+  });
+
+  if (result) {
+    throw event.redirect(308, routes.groups);
+  } else {
+    return event.fail(404, {});
+  }
+});
+
 const GroupDetails = component$(() => {
   const group = useGroup();
   const t = useTranslate();
+  const loc = useLocation();
+  const deleteGroup = useDeleteGroup();
 
   if (!group.value) {
     return (
@@ -47,8 +62,39 @@ const GroupDetails = component$(() => {
       </Page>
     );
   }
+
+  const confirmText = t(
+    "groups.deleteGroupConfirmation@@Are you sure you want to delete this group?",
+  );
+
+  const handleDelete = $(async () => {
+    const isConfirmed = confirm(confirmText);
+    if (isConfirmed) {
+      await deleteGroup.submit();
+    }
+  });
+
   return (
     <Page title={group.value.name!}>
+      <div class="flex gap-4">
+        <a href={`${routes.groups}/${loc.params.groupId}/edit`} class="w-full">
+          <OutlinedButton>{t("app.edit@@Edit")}</OutlinedButton>
+        </a>
+        <OutlinedButton
+          animation={{
+            background: {
+              class: "bg-red-100",
+            },
+          }}
+          onClick$={handleDelete}
+          disabled={deleteGroup.isRunning}
+          class="border-red-300 p-2 text-red-600"
+        >
+          {deleteGroup.isRunning
+            ? t("app.deleting@@Deleting")
+            : t("app.delete@@Delete")}
+        </OutlinedButton>
+      </div>
       <p>
         {t("groups.displayMemberCount@@Members: {{count}}", {
           count: group.value.membersCount,
