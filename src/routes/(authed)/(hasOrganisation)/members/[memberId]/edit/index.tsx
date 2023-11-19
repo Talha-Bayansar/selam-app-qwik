@@ -127,7 +127,11 @@ export const EditMember = component$(() => {
               >
                 <option value="">{t("app.notSelected@@Not selected")}</option>
                 {genders.value.map((gender) => (
-                  <option key={gender.name} value={gender.id}>
+                  <option
+                    key={gender.name}
+                    selected={field.value === gender.id}
+                    value={gender.id}
+                  >
                     {gender.name as string}
                   </option>
                 ))}
