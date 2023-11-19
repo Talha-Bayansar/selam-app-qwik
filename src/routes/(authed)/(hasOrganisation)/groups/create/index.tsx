@@ -17,7 +17,7 @@ export const useFormLoader = routeLoader$<InitialValues<TGroupsForm>>(() => ({
   name: "",
 }));
 
-export const useAddMember = formAction$<TGroupsForm>(async (data, event) => {
+export const useAddGroup = formAction$<TGroupsForm>(async (data, event) => {
   const session = getServerSession(event);
 
   try {
@@ -37,6 +37,7 @@ const CreateGroup = component$(() => {
   const t = useTranslate();
   const [groupsForm, { Form, Field }] = useForm<TGroupsForm>({
     loader: useFormLoader(),
+    action: useAddGroup(),
     validate: valiForm$(GroupsFormSchema),
   });
   return (
